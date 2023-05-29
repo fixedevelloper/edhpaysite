@@ -61,7 +61,11 @@
                         <form method="POST">
                             {{csrf_field()}}
                             <div class="form-check form-check-danger mb-2">
-                                <input class="form-check-input" name="payement_method" value="caisse" type="radio" id="customradio17" checked>
+                                <input class="form-check-input" name="payement_method" value="fluterwave" type="radio" id="customradio17" checked>
+                                <label class="form-check-label" for="customradio17"><img class="w-50" src="{{asset('multi/img/fluterwave.png')}}"></label>
+                            </div>
+                            <div class="form-check form-check-danger mb-2">
+                                <input class="form-check-input" name="payement_method" value="paydunya" type="radio" id="customradio17">
                                 <label class="form-check-label" for="customradio17"><img class="w-50" src="{{asset('multi/img/blue_paydunya.png')}}"></label>
                             </div>
                             <div class="form-check form-check-danger mb-2">

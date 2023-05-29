@@ -52,8 +52,10 @@ Route::match(array('GET', 'POST'),'/seller/addproduct', [SellerController::class
     ->name('seller_add_product');
 Route::get('/removesession', [FrontController::class, 'removesession'])
     ->name('removesession');
-Route::get('/calculplaning', [FrontController::class, 'calculplaning'])
-    ->name('calculplaning');
+Route::get('/testpayement', [FrontController::class, 'testpayement'])
+    ->name('testpayement');
+Route::get('/redirect-payement', [FrontController::class, 'redirectpayement'])
+    ->name('redirectpayement');
 Route::get('/contact', [FrontController::class, 'contact'])
     ->name('contact');
 Route::get('/login', [AuthController::class, 'login'])

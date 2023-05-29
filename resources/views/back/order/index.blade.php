@@ -14,7 +14,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3>Vendeurs</h3>
+                                <h3>Commandes</h3>
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                     <div class="btn-group">
                                       {{--  <a href="{{route('facturation.create')}}" type="button" class="btn btn-primary btn-sm"><i class="mdi mdi-plus-circle"></i>Nouvelle facture
@@ -33,11 +33,10 @@
                                             <th>#N°</th>
                                             <th>Date</th>
                                             <th style="width: 30%">Client</th>
-                                            <th>Type facture</th>
                                             <th>Montant Ht</th>
                                             <th>Tva</th>
                                             <th>Montant ttc</th>
-                                           {{-- <th>Action</th>--}}
+                                           <th>Action</th>
                                         </tr>
                                         </thead>
 
@@ -46,37 +45,33 @@
                                             <tr>
                                                 <td>{{$agents->firstitem()+$key}}</td>
                                                 <td>
-                                                    {{$agent['date_facture']}}
+                                                    {{$agent['created_at']}}
                                                 </td>
                                                 <td>
-                                                    {{$agent['customer']->name}}
+                                                    {{$agent['user']->name}}
                                                 </td>
-                                                <td>
+                                              {{--  <td>
                                                     @if($agent['typefacture']=="soins")
                                                    <span class="badge badge-soft-success">{{$agent['typefacture']}}</span>
                                                     @else
                                                         <span class="badge badge-soft-danger">{{$agent['typefacture']}}</span>
                                                     @endif
-                                                </td>
-                                                <td>
-                                                    {{$agent['montantht']}} <i class="mdi mdi-currency-eur"></i>
-                                                </td>
-                                                <td>
-                                                    {{$agent['tva']}} <i class="mdi mdi-currency-eur"></i>
-                                                </td>
-                                                <td>
-                                                    {{$agent['montantttc']}} <i class="mdi mdi-currency-eur"></i>
-                                                </td>
-                                              {{--  <td>
-                                                    <a class="btn-sm btn-secondary p-1 pr-2 m-1"
-                                                       href="{{route('facturation.edit',[$agent['id']])}}">
-                                                        <i class="mdi mdi-pencil pl-1" aria-hidden="true"></i>
-                                                    </a>
-                                                    <a class="btn-sm btn-danger p-1 pr-2 m-1"
-                                                       data-bs-toggle="modal" data-bs-target="#bs-delete-modal-sm">
-                                                        <i class="mdi mdi-trash-can pl-1" aria-hidden="true"></i>
-                                                    </a>
                                                 </td>--}}
+                                                <td>
+                                                    {{$agent['montantht']}} FCFA
+                                                </td>
+                                                <td>
+                                                    {{$agent['tva']}} FCFA
+                                                </td>
+                                                <td>
+                                                    {{$agent['montantttc']}} FCFA
+                                                </td>
+                                                <td>
+                                                    <a class="btn-sm btn-secondary p-1 pr-2 m-1"
+                                                       href="{{route('order.edit',[$agent['id']])}}">
+                                                        <i class="mdi mdi-eye pl-1" aria-hidden="true"></i>
+                                                    </a>
+                                                </td>
                                             </tr>
                                         @endforeach
                                         </tbody>

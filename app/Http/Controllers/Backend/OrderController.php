@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Helpers\helpers;
 use App\Http\Controllers\Controller;
+use App\Models\LineProduct;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
@@ -173,10 +174,10 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        $facture=Order::query()->find($id);
-        $estheticiens=User::query()->estheticien()->get();
+        $order=Order::query()->find($id);
+        $lines=LineProduct::query()->where(['order_id'=>$id])->get();
         $customers=User::query()->customer()->get();
-        return view('back.order.update', compact('estheticiens','customers','soins','facture'));
+        return view('back.order.update', compact('order','lines'));
 
     }
 

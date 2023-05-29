@@ -10,67 +10,63 @@
 
                 </div>
                 <div class="row mt-3">
-                    <div class="col-12">
+                    <div class="col-8">
                         <div class="card">
                             <div class="card-body">
+                                <dl class="row-md jh-entity-details">
+                                    <dt>Client</dt>
+                                    <dd>{{$order->user->name}} </dd>
+                                    <dt>Total:</dt>
+                                    <dd>{{$order->totalht}} FCFA </dd>
+                                    <dt>Total Ttc</dt>
+                                    <dd>{{$order->total}} FCFA</dd>
+                                    <dt>Status</dt>
+                                    <dd>{{$order->status}} </dd>
+                                </dl>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Product</th>
+                                        <th>Prix</th>
+                                        <th>quantite</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($lines as $line)
+                                        <tr>
+                                            <td></td>
+                                            <td>{{$line->product->libelle}}</td>
+                                            <td>{{$line->product->sale_price}}</td>
+                                            <td>{{$line->quantite}}</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
 
-
-                            <form method="POST" action="{{route('facturation.update',['id'=>$facture->id])}}">
-
-                                    {{csrf_field()}}
-                                    <div class="row mt-1">
-                                        <div class=" col-md-6">
-                                            <label for="name" class="form-label">Client</label>
-
-                                                <select name="customer_id" id="inputState" class="form-select">
-                                                    <option>Choisir le client</option>
-
-                                                    @foreach($customers as $item)
-                                                        @if($facture['customer']->id == $item->id)
-                                                        <option selected value="{{$item->id}}">{{$item->name}}-{{$item->lastname}}</option>
-                                                        @else
-                                                            <option value="{{$item->id}}">{{$item->name}} {{$item->lastname}}</option>
-                                                        @endif
-                                                            @endforeach
-                                                </select>
-
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="name" class="form-label">Estheticiene</label>
-                                            <select name="user_id" id="inputState" class="form-select">
-                                                <option>Choisir l'estheticiene</option>
-                                                @foreach($estheticiens as $item)
-                                                    <option {{ $facture['user']->id == $item->id ? 'selected' : '' }} value="{{$item->id}}">{{$item->name}} {{$item->lastname}}</option>
-                                                @endforeach
-                                            </select></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <form method="POST">
+                                {{csrf_field()}}
+                                    <div class="mb-3 col-md-12">
+                                        <label for="name" class="form-label">Status</label>
+                                        <select class="form-select">
+                                            <option>PENDING</option>
+                                            <option>VALIDATE</option>
+                                            <option>ACTIVATED</option>
+                                        </select>
                                     </div>
-                                    <div class="row mt-1">
-                                        <div class="col-md-12">
-                                            <label for="name" class="form-label">Soin</label>
-                                            <select name="soin_id" id="inputSoin" class="form-select">
-                                                <option>Choisir le soin</option>
-                                                @foreach($soins as $item)
-                                                    <option  {{ $facture['soin']->id == $item->id ? 'selected' : '' }} data-duree="{{$item->duree}}" data-price="{{$item->price}}" value="{{$item->id}}">{{$item->libelle}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                    <div class="row mb-3 text-center">
+                                       <button class="btn btn-success rounded-pill" type="submit"> Changer le status </button>
                                     </div>
-                                    <div class="row mt-1">
-                                        <div class="col-md-6">
-                                            <label for="name" class="form-label">Prix</label>
-                                            <input class="form-control"  name="name" type="text" id="price" disabled placeholder="">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="name" class="form-label">Duree</label>
-                                            <input class="form-control"  name="name" type="text" id="duree" disabled placeholder="">
-                                        </div>
-                                    </div>
-                                    <div class=" p-3 mb-3 text-center">
-                                        <a class="btn btn-warning" type="button" href="{{route('facture.index')}}"><i class="mdi mdi-arrow-left"></i> annuler </a>
-                                        <button class="btn btn-success" type="submit"> Modifier </button>
-                                    </div>
-                            </form>
-                        </div></div>
+                                </form>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

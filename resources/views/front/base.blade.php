@@ -52,7 +52,6 @@
     var configs={
         routes:{
             index: "{{\Illuminate\Support\Facades\URL::to('/')}}",
-            calculplaning: "{{\Illuminate\Support\Facades\URL::route('calculplaning')}}",
             checkout: "{{\Illuminate\Support\Facades\URL::route('checkout')}}",
         }
     }
