@@ -21,12 +21,12 @@
                                         <input class="form-control" value="{{$product->libelle}}" name="libelle" type="text" id="name" required="" placeholder="Enter your name">
                                     </div>
                                     <div class="mb-3 col-md-6">
-                                        <label for="name" class="form-label">Prix</label>
-                                        <input class="form-control" value="{{$product->price}}" min="0" name="price" type="text" id="name" required="" placeholder="Enter your name">
+                                        <label for="price_" class="form-label">Prix</label>
+                                        <input class="form-control" value="{{$product->price}}" min="0" name="price" type="number" id="price_" required="" placeholder="">
                                     </div>
                                     <div class="mb-3 col-md-6">
-                                        <label for="name" class="form-label">Prix de vente</label>
-                                        <input value="{{$product->sale_price}}" class="form-control" min="0" name="price_sell" type="text" id="name" required="" placeholder="Enter your name">
+                                        <label for="sale_price" class="form-label">Prix de vente</label>
+                                        <input value="{{$product->sale_price}}" class="form-control" min="0" name="sale_price" type="number" id="sale_price" required="" placeholder="Enter your name">
                                     </div>
                                     <div class="mb-3 col-md-12">
                                         <label for="name" class="form-label">Quantite</label>

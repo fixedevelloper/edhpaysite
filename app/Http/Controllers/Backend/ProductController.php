@@ -130,7 +130,7 @@ class ProductController extends Controller
             'description' => $request->description,
             'quantite' => $request->quantite,
             'image' => is_null($request->file('image'))?$conge->image:Helpers::upload('product/', 'png', $request->file('image')),
-            'price_sell' => $request->price_sell,
+            'sale_price' => $request->sale_price,
             'price' => $request->price,
         ]);
         return redirect()->route('product.index');

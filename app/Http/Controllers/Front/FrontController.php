@@ -7,34 +7,38 @@ namespace App\Http\Controllers\Front;
 use App\Helpers\helpers;
 use App\Http\Controllers\Controller;
 use App\Http\Service\FlutterwareService;
+use App\Http\Service\PaydunyaService;
+use App\Http\Service\PaypalService;
+use App\Http\Service\StripeService;
 use App\Models\Categorie;
 use App\Models\LineProduct;
 use App\Models\Order;
-use App\Models\Planing;
-use App\Models\Prestation;
 use App\Models\Product;
-use App\Models\Reservation;
-use App\Models\Soin;
-use App\Models\Soin_type;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Psr\Log\LoggerInterface;
+use Ramsey\Uuid\Uuid;
 
 class FrontController extends Controller
 {
     private $logger;
     private $flutterservice;
+    private $paydunyaService;
+    private $paypalService;
 
     /**
      * FrontController constructor.
      * @param $logger
      */
-    public function __construct(FlutterwareService $flutterservice, LoggerInterface $logger)
+    public function __construct(PaydunyaService $paydunyaService,FlutterwareService $flutterservice,
+                                LoggerInterface $logger,PaypalService $paypalService)
     {
         $this->logger = $logger;
         $this->flutterservice = $flutterservice;
+        $this->paydunyaService=$paydunyaService;
+        $this->paypalService=$paypalService;
     }
 
     public function home(Request $request)
@@ -112,13 +116,13 @@ class FrontController extends Controller
             }
         }
         if ($request->method() == "POST") {
-
+            $orderkey=Uuid::uuid4();
             $reservation = new Order();
             $reservation->payment_method = $request->get('payement_method');
             $reservation->status = Order::PENDING;
             $reservation->currency = "XAF";
             $reservation->numero = "XAF";
-            $reservation->order_key = "0254788";
+            $reservation->order_key = $orderkey;
             $reservation->total = 0.0;
             $reservation->user_id = $customer->id;
             $reservation->save();
@@ -148,13 +152,30 @@ class FrontController extends Controller
             Session::remove("start");
             Session::remove("date");
             Session::remove("user_id");
-            $response = $this->flutterservice->makeCollet([
-                'ref' => "1254788",
-                "amount" => $total,
-                'currency' => "XAF",
-                'redirect_url' => route('redirectpayement')
-            ]);
-            redirect($response['data']['link']);
+            if ($request->get('payement_method')=="fluterwave"){
+                $response = $this->flutterservice->makeCollet([
+                    'ref' => $orderkey,
+                    "amount" => $total,
+                    'currency' => "XAF",
+                    'redirect_url' => route('redirectpayement')
+                ]);
+                return redirect($response['data']['link']);
+            }
+            if ($request->get('payement_method')=="paydunya"){
+                $response = $this->paydunyaService->make_payment([
+                    "amount" => $total,
+                    'order_key' => $orderkey,
+                ]);
+                return $response;
+            }
+            if ($request->get('payement_method')=='paypal'){
+               return $this->paypalService->payWithpaypal(['amount'=>$total,'name'=>$customer->name]);
+            }
+            if ($request->get('payement_method')=='stripe'){
+                return StripeService::payment_process_3d(['amount'=>$total]);
+            }
+
+
         }
         return view('front.checkout', [
             "soins" => $arrays,
@@ -271,14 +292,19 @@ class FrontController extends Controller
 
     public function testpayement(Request $request)
     {
-        $response = $this->flutterservice->makeCollet([
+       /* $response = $this->flutterservice->makeCollet([
             'ref' => "1254788",
             "amount" => 2000,
             'currency' => "XAF",
             'redirect_url' => route('redirectpayement')
         ]);
+
         logger($response);
-        return redirect($response['data']['link']);
+        return redirect($response['data']['link']);*/
+       /* return $this->paydunyaService->make_payment(['amount'=>2000,
+            'order_key'=>25147888]);*/
+      //return  StripeService::payment_process_3d(['amount'=>2000]);
+        return $this->paypalService->payWithpaypal(['amount'=>2000,'name'=>"Rodrigue mbah"]);
     }
 
     public function redirectpayement(Request $request)

@@ -73,6 +73,10 @@
                                 <label class="form-check-label" for="customradio17"><img class="w-50" src="{{asset('multi/img/paypal.png')}}"></label>
                             </div>
                             <div class="form-check form-check-danger mb-2">
+                                <input class="form-check-input" name="payement_method" value="stripe" type="radio" id="customradio17" >
+                                <label class="form-check-label" for="customradio17"><img class="w-50" src="{{asset('multi/img/stripe.png')}}"></label>
+                            </div>
+                            <div class="form-check form-check-danger mb-2">
                                 <input class="form-check-input" name="payement_method" value="bank_transfert" type="radio" id="customradio17" >
                                 <label class="form-check-label" for="customradio17"><img class="w-50" src="{{asset('multi/img/logo-cinetpay.webp')}}"></label>
                             </div>

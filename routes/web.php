@@ -15,6 +15,7 @@ use App\Http\Controllers\Backend\ReservationController;
 use App\Http\Controllers\Backend\SoinController;
 use App\Http\Controllers\Backend\TypeSoinController;
 use App\Http\Controllers\Front\AccountController;
+use App\Http\Controllers\Front\CallbackController;
 use App\Http\Controllers\Front\FrontController;
 use App\Http\Controllers\Front\SellerController;
 use App\Http\Controllers\HomeComtroller;
@@ -54,8 +55,21 @@ Route::get('/removesession', [FrontController::class, 'removesession'])
     ->name('removesession');
 Route::get('/testpayement', [FrontController::class, 'testpayement'])
     ->name('testpayement');
+
 Route::get('/redirect-payement', [FrontController::class, 'redirectpayement'])
     ->name('redirectpayement');
+Route::group(['prefix' => 'callback', 'as' => 'callback.'],function (){
+    Route::match(array('GET', 'POST'), '/paydunya', [CallbackController::class, 'paydunya'])
+        ->name('callbackpaydunya');
+      Route::match(array('GET', 'POST'), '/paypal-status', [CallbackController::class, 'paypalstatus'])
+          ->name('paypal-status');
+    Route::get('/payment-fail', [CallbackController::class, 'paymentfail'])
+        ->name('payment-fail');
+    Route::get('/payment-succes', [CallbackController::class, 'paymentsucces'])
+        ->name('payment-succes');
+});
+
+
 Route::get('/contact', [FrontController::class, 'contact'])
     ->name('contact');
 Route::get('/login', [AuthController::class, 'login'])
