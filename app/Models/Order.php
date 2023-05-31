@@ -15,6 +15,7 @@ class Order extends Model
         'order_key',
         'totaltva',
         'currency',
+        'reference',
         'status',
     ];
     const PENDING = "PENDING";

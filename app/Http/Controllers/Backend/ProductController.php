@@ -86,6 +86,9 @@ class ProductController extends Controller
             $user->price = $request->price;
             $user->slug = Str::slug($request->libelle);
             $user->categorie_id = $request->product_type_id;
+            $user->isvirtual = $request->virtual=='on'?true:false;
+               $user->paid_view = $request->paidview;
+               $user->free_view = $request->freeview;
            // $user->fournisseur_id = isset($request->fournisseur_id)?$request->fournisseur_id:null;
             $user->save();
             $image=new Image();
@@ -124,14 +127,23 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $conge = Product::find($id);
-        $conge->update([
+        $product = Product::query()->find($id);
+        $image=$product->images[0];
+        if (!is_null($request->file('image'))){
+            $image->update([
+                'src'=>Helpers::upload('images/', $request->file('image')->guessExtension(), $request->file('image'))
+            ]);
+        }
+            $product->update([
             'libelle' => $request->libelle,
             'description' => $request->description,
             'quantite' => $request->quantite,
-            'image' => is_null($request->file('image'))?$conge->image:Helpers::upload('product/', 'png', $request->file('image')),
+            //'image' => is_null($request->file('image'))?,
             'sale_price' => $request->sale_price,
             'price' => $request->price,
+                'isvirtual' => $request->virtual=='on'?true:false,
+                'paid_view' => $request->paidview,
+                'free_view' => $request->freeview,
         ]);
         return redirect()->route('product.index');
     }

@@ -65,10 +65,10 @@
                                                     {{$agent['quantity']}}
                                                 </td>
                                                 <td>
-                                                    {{$agent['price']}} <i class="mdi mdi-currency-eur"></i>
+                                                    {{$agent['price']}} FCFA
                                                 </td>
                                                 <td>
-                                                    {{$agent['sale_price']}} <i class="mdi mdi-currency-eur"></i>
+                                                    {{$agent['sale_price']}} FCFA
                                                 </td>
                                                 <td>
                                                     <div class="btn-group">

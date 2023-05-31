@@ -45,6 +45,11 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="virtual" class="form-label">Produit virtuel?</label>
+                                        <input id="virtual" @if($product['isvirtual'])checked @endif class="form-check" name="virtual" type="checkbox"
+                                               placeholder="">
+                                    </div>
                                     <div class="mb-3 col-md-12">
                                         <label for="name" class="form-label">Image</label>
                                         <div class="text-center mt-1 mb-1">
@@ -56,17 +61,34 @@
                                     </div>
                                     <div class="mb-3 col-md-12">
                                         <label for="description" class="form-label">Description</label>
-                                        <textarea  id="description" rows="4" class="form-control" name="description" placeholder="produit description">
+                                        <textarea rows="4"  id="description" class="form-control" name="description" placeholder="">
                                             {{$product->description}}
-                                </textarea>
+                                        </textarea>
                                     </div>
                                 </div>
-                                <div class="mb-3 text-center">
+                                <div id="contenu-virtual" class="row">
+                                    <div class="mb-3 col-md-12">
+                                        <label for="freeview" class="form-label">Contenu libre</label>
+                                        <textarea id="freeview" rows="4" class="form-control" name="freeview" type="text"
+                                                  placeholder="">
+                                             {{$product->free_view}}
+                                            </textarea>
+                                    </div>
+                                    <div class="mb-3 col-md-12">
+                                        <label for="paidview" class="form-label">Contenu payant</label>
+                                        <textarea id="paidview" rows="4" class="form-control" name="paidview" type="text"
+                                                  placeholder="">
+                                             {{$product->paid_view}}
+                                            </textarea>
+                                    </div>
+                                </div>
+                                <div class="mb-3 mt-5 text-center">
                                     <a class="btn btn-warning" type="button" href="{{route('product.index')}}"><i class="mdi mdi-arrow-left"></i> annuler </a>
                                     <button class="btn btn-success" type="submit"> Modifier </button>
                                 </div>
                             </form>
-                        </div></div>
+                        </div>
+                        </div>
                     </div>
                 </div>
             </div>

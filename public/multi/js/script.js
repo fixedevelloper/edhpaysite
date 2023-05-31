@@ -1,3 +1,4 @@
+this.placeholderEl.style.width=r?n+"px":"auto",this.placeholderEl.style.height=a+"px";
 function getItem(id){
     $('#time').text(id.value);
     console.log(id.value)

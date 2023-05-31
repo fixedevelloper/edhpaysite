@@ -16,6 +16,9 @@ class Product extends Model
         'sale_price',
         'slug',
         'quatity',
+        'isvirtual',
+        'paid_view',
+        'free_view',
         'categorie_id',
         'shop_id'
     ];

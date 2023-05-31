@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="{{asset('css/app.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/dropzone.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/icons.min.css')}}">
+    <link rel="stylesheet" href="{{asset('quill/quill.core.css')}}">
+    <link rel="stylesheet" href="{{asset('quill/quill.bubble.css')}}">
+    <link rel="stylesheet" href="{{asset('quill/quill.snow.css')}}">
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
 </head>
 <body class="loading" data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed",
@@ -30,6 +33,7 @@
 <script src="{{asset('js/databases/dataTables.bootstrap5.min.js') }}"></script>
 <script src="{{asset('js/app.min.js') }}"></script>
 <script src="{{asset('js/dropzone.min.js') }}"></script>
+<script src="{{asset('quill/quill.min.js') }}"></script>
 <script src="{{asset('js/form-fileuploads.init.js') }}"></script>
 <script>
     var configs={
@@ -53,6 +57,18 @@
 <script src="{{asset('js/script.js') }}"></script>
 <script type="text/javascript">
     $(function () {
+        if ($('#virtual').is(':checked')){
+            $('#contenu-virtual').show()
+        }else {
+            $('#contenu-virtual').hide()
+        }
+        $('#virtual').change(function () {
+            if ($(this).is(':checked')){
+                $('#contenu-virtual').show()
+            }else {
+                $('#contenu-virtual').hide()
+            }
+        });
         $('#duree').val($("#inputSoin option:selected").data('duree'))
         $('#price').val($("#inputSoin option:selected").data('price'))
         $('#inputSoin').change(function () {
