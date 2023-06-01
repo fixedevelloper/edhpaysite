@@ -115,8 +115,10 @@ class FrontController extends Controller
         foreach ($products as $item) {
             $soin = Product::query()->find($item['id']);
             if (isset($soin)) {
-                $arrays[] = $soin;
-
+                $arrays[] = [
+                    'item' => $soin,
+                    'quantity' => $item['quantity']
+                ];
                 $total += $soin->sale_price * $item['quantity'];
             }
         }

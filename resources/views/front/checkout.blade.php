@@ -33,9 +33,9 @@
 
                         @foreach($soins as $product)
                             <tr>
-                                <td class="align-middle"> {{$product->libelle}}</td>
-                                <td class="align-middle">{{round($product->sale_price,2)}}<i class=""></i>{{session()->get('currency')==="XAF"?'FCFA':session()->get('currency')}}</td>
-                                <td class="align-middle">{{$product->quantity}}</td>
+                                <td class="align-middle"> {{$product['item']->libelle}}</td>
+                                <td class="align-middle">{{round($product['item']->sale_price*$change,2)}}<i class=""></i>{{session()->get('currency')==="XAF"?'FCFA':session()->get('currency')}}</td>
+                                <td class="align-middle">{{$product['quantity']}}</td>
                             </tr>
                         @endforeach
                         </tbody>
