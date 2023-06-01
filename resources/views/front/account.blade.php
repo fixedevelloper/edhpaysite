@@ -176,9 +176,9 @@
                             <tr>
                                 <th>#N°</th>
                                 <th>Date</th>
-                                <th>heure</th>
                                 <th>Prix</th>
                                 <th>Status</th>
+                                <th></th>
                             </tr>
                             </thead>
 
@@ -197,7 +197,11 @@
                                     <td>
                                         {{$agent['status']}}
                                     </td>
-
+                                    <td>
+                                        @if($agent['status']==\App\Models\Order::COMPLETED)
+                                            <a class="btn btn-success btn-sm rounded-pill" href="{{route('detailorder',['order_key'=>$agent['order_key']])}}">Afficher</a>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>

@@ -71,7 +71,7 @@ class CallbackController extends Controller
             $txn_ref = request()->tx_ref;
             $o = explode('_', $txn_ref);
             $order_id = intval( $o[1] );
-            $order=Order::query()->where(['order_key'=>$order_id])->first();
+            $order=Order::query()->where(['order_key'=>$txn_ref])->first();
             $order->update([
                'status'=>Order::COMPLETED
             ]);

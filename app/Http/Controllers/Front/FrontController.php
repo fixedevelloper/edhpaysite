@@ -209,6 +209,16 @@ class FrontController extends Controller
             'product' => $soin,
             'change'=>helpers::setPrice(\session()->get('currency')),
         ]);
+
+    }
+    public function detailorder($order_key){
+        $order=Order::query()->where(['order_key'=>$order_key])->first();
+        $lines=LineProduct::query()->where(['order_id'=>$order->id])->get();
+        return view('front.detailorder', [
+            'order' => $order,
+            'change'=>helpers::setPrice(\session()->get('currency')),
+            'lines'=>$lines
+        ]);
     }
 
     public function cart(Request $request)

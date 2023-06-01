@@ -102,6 +102,8 @@ Route::group(['middleware' => ['checkCustomer']], function () {
         ->name('account');
     Route::match(array('GET', 'POST'),'/checkout', [FrontController::class, 'checkout'])
         ->name('checkout');
+    Route::match(array('GET', 'POST'),'/showdetail/{order_key}', [FrontController::class, 'detailorder'])
+        ->name('detailorder');
     Route::match(array('GET', 'POST'),'/app/profil', [AccountController::class, 'profil'])
         ->name('app.profil');
 });
