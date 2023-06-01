@@ -34,7 +34,7 @@
                     @foreach($soins as $product)
                     <tr>
                         <td class="align-middle"><img src="{{asset('storage/images')}}/{{$product['item']->images[0]->src}}" alt="" style="width: 50px;"> {{$product['item']->libelle}}</td>
-                        <td class="align-middle"></i>{{$product['item']->sale_price}}<i class="">FCFA</td>
+                        <td class="align-middle"></i>{{round($product['item']->sale_price * $change,2)}}<i class="">{{session()->get('currency')==="XAF"?'FCFA':session()->get('currency')}}</td>
                         <td class="align-middle">{{$product['quantity']}}</td>
                         <td class="align-middle"><a href="{{route('removesession',['id'=>$product['item']->id])}}" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></a></td>
                     </tr>
@@ -57,21 +57,21 @@
                     <div class="border-bottom pb-2">
                         <div class="d-flex justify-content-between mb-3">
                             <h6>Sub-Total</h6>
-                            <h6>{{$totalht}}<i class=""></i>FCFA</h6>
+                            <h6>{{round($totalht * $change,2)}}<i class=""></i>{{session()->get('currency')==="XAF"?'FCFA':session()->get('currency')}}</h6>
                         </div>
                         <div class="d-flex justify-content-between mb-3">
                             <h6 class="font-weight-medium">Tva</h6>
-                            <h6 class="font-weight-medium">{{$totaltva}}<i class=""></i>FCFA</h6>
+                            <h6 class="font-weight-medium">{{round($totaltva * $change,2)}}<i class=""></i>{{session()->get('currency')==="XAF"?'FCFA':session()->get('currency')}}</h6>
                         </div>
                         <div class="d-flex justify-content-between">
                             <h6 class="font-weight-medium">Reduction</h6>
-                            <h6 class="font-weight-medium">0.0<i class=""></i>FCFA</h6>
+                            <h6 class="font-weight-medium">0.0<i class=""></i>{{session()->get('currency')==="XAF"?'FCFA':session()->get('currency')}}</h6>
                         </div>
                     </div>
                     <div class="pt-2">
                         <div class="d-flex justify-content-between mt-2">
                             <h5>Total</h5>
-                            <h5>{{$total}}<i class=""></i>FCFA</h5>
+                            <h5>{{round($total * $change,2)}}<i class=""></i>{{session()->get('currency')==="XAF"?'FCFA':session()->get('currency')}}</h5>
                         </div>
                         <a href="{{route('checkout')}}" class="btn btn-block btn-primary font-weight-bold my-3 py-3">Continue</a>
                     </div>

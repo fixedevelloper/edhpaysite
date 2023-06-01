@@ -19,7 +19,21 @@ use Stevebauman\Location\Facades\Location;
 
 class helpers
 {
-
+    public static function setPrice($currency){
+        switch ($currency){
+            case 'XAF':
+                return 1;
+            case 'EUR':
+                return 1/650;
+            case 'USD':
+                return 1/590;
+            case 'CAD':
+                return 1/400;
+            case 'GBD':
+                return 1/980;
+            default: return 1;
+        }
+    }
 
     public static function upload(string $dir, string $format, $image = null)
     {

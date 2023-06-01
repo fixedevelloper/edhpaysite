@@ -4,6 +4,7 @@
 namespace App\Http\Service;
 
 
+use App\Helpers\helpers;
 use Flutterwave\Contract\ConfigInterface;
 use Flutterwave\Flutterwave;
 use Flutterwave\Payload;
@@ -37,17 +38,17 @@ class FlutterwareService
     public  function makeCollet($data){
         $postdata = [
             'tx_ref' => $data['ref'],
-            'amount' => $data['amount'],
-            'currency' => $data['currency'],
-            'redirect_url' => $data['redirect_url'],
+            'amount' => $data['amount']*helpers::setPrice(session('currency')),
+            'currency' => session('currency'),
+            'redirect_url' => route('callback.callbackflutterware'),
             'meta' => [
                 'consumer_id' => 23,
                 'consumer_mac' => "92a3-912ba-1192a"
             ],
             'customer' => [
-                "full_name" => "Olaobaju Jesulayomi Abraham",
-                "email" => "vicomma@gmail.com",
-                "phone" => "+2349067985861"
+                "full_name" => $data['name'],
+                "email" => $data['email'],
+                "phone" => $data['phone']
             ],
             'customizations' => [
                 'title' => "EDHPay",

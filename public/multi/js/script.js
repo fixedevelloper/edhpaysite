@@ -1,4 +1,4 @@
-this.placeholderEl.style.width=r?n+"px":"auto",this.placeholderEl.style.height=a+"px";
+
 function getItem(id){
     $('#time').text(id.value);
     console.log(id.value)
@@ -7,15 +7,7 @@ function getCartTime(id){
     $('#time').text(id.value);
     console.log(id.value)
 }
-var btngroupress=e=>{
-    const isbtn=e.target.nodeName=='BUTTON';
-    if (!isbtn){
-        return
-    }
-    console.log(e.target.id)
-}
-var btng= document.getElementById("cart_heure");
-//btng.addEventListener("click",btngroupress)
+
 
 function getReportDay(id){
     $('#reportday_id').text(id);

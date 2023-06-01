@@ -58,9 +58,17 @@ Route::get('/testpayement', [FrontController::class, 'testpayement'])
 
 Route::get('/redirect-payement', [FrontController::class, 'redirectpayement'])
     ->name('redirectpayement');
+Route::get('/currency-change', [FrontController::class, 'currencychange'])
+    ->name('currencychange');
 Route::group(['prefix' => 'callback', 'as' => 'callback.'],function (){
-    Route::match(array('GET', 'POST'), '/paydunya', [CallbackController::class, 'paydunya'])
+    Route::match(array('GET', 'POST'), '/paydunya', [CallbackController::class, 'callbackpaydunya'])
         ->name('callbackpaydunya');
+    Route::match(array('GET', 'POST'), '/flutterware', [CallbackController::class, 'callbackflutterware'])
+        ->name('callbackflutterware');
+    Route::match(array('GET', 'POST'), '/stripe-success', [CallbackController::class, 'callbackstripesuccess'])
+        ->name('callbackstripesuccess');
+    Route::match(array('GET', 'POST'), '/stripe-cancell', [CallbackController::class, 'callbackstripecancell'])
+        ->name('callbackstripecancell');
       Route::match(array('GET', 'POST'), '/paypal-status', [CallbackController::class, 'paypalstatus'])
           ->name('paypal-status');
     Route::get('/payment-fail', [CallbackController::class, 'paymentfail'])

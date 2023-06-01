@@ -62,7 +62,8 @@ class FrontController extends Controller
             'allItems' => $allItems,
             'categories' => $categories,
             'features' => $features,
-            'recents' => $recents
+            'recents' => $recents,
+            'change'=>helpers::setPrice(\session()->get('currency')),
         ]);
     }
 
@@ -94,7 +95,8 @@ class FrontController extends Controller
 
         $products = $products->latest()->paginate(Helpers::pagination_limit())->appends($query_param);
         return view('front.products', [
-            'products' => $products
+            'products' => $products,
+            'change'=>helpers::setPrice(\session()->get('currency')),
         ]);
     }
 
@@ -156,6 +158,9 @@ class FrontController extends Controller
                 $response = $this->flutterservice->makeCollet([
                     'ref' => $orderkey,
                     "amount" => $total,
+                    "email" => $customer->email,
+                    "name" => $customer->name,
+                    "phone" => $customer->phone,
                     'currency' => "XAF",
                     'redirect_url' => route('redirectpayement')
                 ]);
@@ -172,7 +177,7 @@ class FrontController extends Controller
                return $this->paypalService->payWithpaypal(['amount'=>$total,'name'=>$customer->name]);
             }
             if ($request->get('payement_method')=='stripe'){
-                return StripeService::payment_process_3d(['amount'=>$total]);
+                return StripeService::payment_process_3d(['amount'=>$total,'ref'=>$orderkey]);
             }
 
 
@@ -182,17 +187,14 @@ class FrontController extends Controller
             "total" => $total,
             "start" => session('start'),
             "date" => session('date'),
+            'change'=>helpers::setPrice(\session()->get('currency')),
         ]);
     }
 
-    public function checkoutsession(Request $request)
+    public function currencychange(Request $request)
     {
-        Session::put('soin_id', $request->get('item'));
-        Session::put('start', $request->get('start'));
-        Session::put('date', $request->get('date'));
-        Session::put('user_id', $request->get('user_id'));
-
-        return response()->json(['data' => "", 'status' => true]);
+        Session::put('currency', $request->get('currency'));
+        return back();
     }
 
     public function detailproduct($slug, Request $request)
@@ -201,6 +203,7 @@ class FrontController extends Controller
 
         return view('front.detail_product', [
             'product' => $soin,
+            'change'=>helpers::setPrice(\session()->get('currency')),
         ]);
     }
 
@@ -227,9 +230,11 @@ class FrontController extends Controller
             'totalht' => $total,
             'totaltva' => $total * 0.21,
             'total' => $total + ($total * 0.21),
+            'change'=>helpers::setPrice(\session()->get('currency')),
             'soins' => $arrays,
         ]);
     }
+
 
     public function removesession(Request $request)
     {

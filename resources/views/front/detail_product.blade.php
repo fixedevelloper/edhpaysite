@@ -64,7 +64,7 @@
                         </div>
                         <small class="pt-1">(99 Reviews)</small>
                     </div>
-                    <h3 class="font-weight-semi-bold mb-4">{{$product->sale_price}} FCFA</h3>
+                    <h3 class="font-weight-semi-bold mb-4">{{round($product->sale_price * $change,2)}} {{session()->get('currency')==="XAF"?'FCFA':session()->get('currency')}}</h3>
                     <p class="mb-4">{{$product->description}}</p>
                    {{-- <div class="d-flex mb-3">
                         <strong class="text-dark mr-3">Sizes:</strong>
@@ -122,7 +122,7 @@
                             <input name="id" value="{{$product->id}}" type="hidden">
                         <div class="input-group quantity mr-3" style="width: 130px;">
                             <div class="input-group-btn">
-                                <a class="btn btn-primary btn-minus">
+                                <a class="btn  btn-primary btn-minus">
                                     <i class="fa fa-minus"></i>
                                 </a>
                             </div>

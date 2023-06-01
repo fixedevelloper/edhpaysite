@@ -4,6 +4,7 @@
 namespace App\Http\Service;
 
 
+use App\Helpers\helpers;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Session;
 use Ramsey\Uuid\Uuid;
@@ -58,7 +59,7 @@ class PaydunyaService
             }
         } catch (\Exception $exception) {
             logger(">>>>>++++ PAYDUNYA EXCEPTION" . $exception);
-            return \redirect()->route('payment-fail')->withErrors(['error' => 'Failed']);
+            return \redirect()->route('callback.payment-fail')->withErrors(['error' => 'Failed']);
         }
         return $response;
     }
@@ -75,15 +76,15 @@ class PaydunyaService
         $paydunya_items[] = [
             "name" => "merchant paid",
             "quantity" => 1,
-            "unit_price" => $data['amount'],
-            "total_price" => $data['amount'],
+            "unit_price" => $data['amount']*helpers::setPrice(session('currency')),
+            "total_price" => $data['amount']*helpers::setPrice(session('currency')),
             "description" => ""
         ];
         $paydunya_args = [
             "invoice" => [
                 "items" => $paydunya_items,
-                "total_amount" => $data['amount'],
-                "description" => "Paiement de " . $data['amount'] . " FCFA pour recharge de compte sur " . "EDHPay"
+                "total_amount" => $data['amount']*helpers::setPrice(session('currency')),
+                "description" => "Paiement de " . $data['amount']*helpers::setPrice(session('currency')) . " pour".session('currency')." recharge de compte sur " . "EDHPay"
             ], "store" => [
                 "name" => "EDHPay",
                 "website_url" => "https://edhpay.com"

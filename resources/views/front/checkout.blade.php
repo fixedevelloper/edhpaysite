@@ -34,7 +34,7 @@
                         @foreach($soins as $product)
                             <tr>
                                 <td class="align-middle"> {{$product->libelle}}</td>
-                                <td class="align-middle">{{$product->sale_price}}<i class=""></i>FCFA</td>
+                                <td class="align-middle">{{round($product->sale_price,2)}}<i class=""></i>{{session()->get('currency')==="XAF"?'FCFA':session()->get('currency')}}</td>
                                 <td class="align-middle">{{$product->quantity}}</td>
                             </tr>
                         @endforeach
@@ -48,9 +48,9 @@
                 <div class="bg-light p-30 mb-3">
                     <dl class="row-md jh-entity-details">
                         <dt>Montant</dt>
-                        <dd>{{$total}} FCFA</dd>
+                        <dd>{{round($total *$change,2)}} {{session()->get('currency')==="XAF"?'FCFA':session()->get('currency')}}</dd>
                         <dt>Montant total</dt>
-                        <dd>{{$total}} FCFA</dd>
+                        <dd>{{round($total * $change,2)}} {{session()->get('currency')==="XAF"?'FCFA':session()->get('currency')}}</dd>
                     </dl>
                     <hr>
                 </div>

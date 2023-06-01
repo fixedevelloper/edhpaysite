@@ -10,6 +10,16 @@
             </div>
         </div>
         <div class="col-lg-6 text-center text-lg-right">
+            <div class="btn-group mx-2">
+                <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">{{session()->get('currency')}}</button>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a href="{{route('currencychange',['currency'=>'EUR'])}}" class="dropdown-item" type="button">EUR</a>
+                    <a href="{{route('currencychange',['currency'=>'USD'])}}" class="dropdown-item" type="button">USD</a>
+                    <a href="{{route('currencychange',['currency'=>'XAF'])}}" class="dropdown-item" type="button">XAF</a>
+                    <a href="{{route('currencychange',['currency'=>'GBP'])}}" class="dropdown-item" type="button">GBP</a>
+                    <a href="{{route('currencychange',['currency'=>'CAD'])}}" class="dropdown-item" type="button">CAD</a>
+                </div>
+            </div>
             <div class="d-inline-flex align-items-center">
                 <div class="btn-group">
                     @if(auth()->check() && auth()->user()->user_type == 2)
@@ -20,6 +30,7 @@
                     @endif
                 </div>
             </div>
+
             <div class="d-inline-flex align-items-center d-block d-lg-none">
                 <a href="" class="btn px-0 ml-2">
                     <i class="fas fa-heart text-dark"></i>
@@ -47,7 +58,7 @@
         <div class="col-lg-4 col-6 text-left">
            <form action="">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Recherche des soins">
+                    <input type="text" class="form-control" placeholder="Recherche des produits">
                     <div class="input-group-append">
                             <span class="input-group-text bg-transparent text-primary">
                                 <i class="fa fa-search"></i>

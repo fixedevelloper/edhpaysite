@@ -30,27 +30,27 @@
                         </div>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                             <input type="checkbox" class="custom-control-input" id="price-1">
-                            <label class="custom-control-label" for="price-1">0  - 1000 FCFA</label>
+                            <label class="custom-control-label" for="price-1">0  - 1000 {{session()->get('currency')==="XAF"?'FCFA':session()->get('currency')}}</label>
                             <span class="badge border font-weight-normal">500</span>
                         </div>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                             <input type="checkbox" class="custom-control-input" id="price-2">
-                            <label class="custom-control-label" for="price-2">1000 - 2000FCFA</label>
+                            <label class="custom-control-label" for="price-2">1000 - 2000 {{session()->get('currency')==="XAF"?'FCFA':session()->get('currency')}}</label>
                             <span class="badge border font-weight-normal">1500</span>
                         </div>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                             <input type="checkbox" class="custom-control-input" id="price-3">
-                            <label class="custom-control-label" for="price-3">2000 - 3000FCFA</label>
+                            <label class="custom-control-label" for="price-3">2000 - 3000 {{session()->get('currency')==="XAF"?'FCFA':session()->get('currency')}}</label>
                             <span class="badge border font-weight-normal">2460</span>
                         </div>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                             <input type="checkbox" class="custom-control-input" id="price-4">
-                            <label class="custom-control-label" for="price-4">3000 - 4000FCFA</label>
+                            <label class="custom-control-label" for="price-4">3000 - 4000 {{session()->get('currency')==="XAF"?'FCFA':session()->get('currency')}}</label>
                             <span class="badge border font-weight-normal">3500</span>
                         </div>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
                             <input type="checkbox" class="custom-control-input" id="price-5">
-                            <label class="custom-control-label" for="price-5">4000 - 5000FCFA</label>
+                            <label class="custom-control-label" for="price-5">4000 - 5000 {{session()->get('currency')==="XAF"?'FCFA':session()->get('currency')}}</label>
                             <span class="badge border font-weight-normal">4900</span>
                         </div>
                     </form>
@@ -177,9 +177,9 @@
                                 </div>
                             </div>
                             <div class="text-center py-4">
-                                <a class="h6 text-decoration-none text-truncate" href="">{{$product['libelle']}}</a>
+                                <a class="h6 text-decoration-none text-truncate" href="{{route('detailproduct',['slug'=>$product['slug']])}}">{{$product['libelle']}}</a>
                                 <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5>{{$product->sale_price}} FCFA</h5>
+                                    <h5>{{round($product->sale_price*$change,2)}} {{session()->get('currency')==="XAF"?'FCFA':session()->get('currency')}}</h5>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-center mb-1">
                                     <small class="fa fa-star text-primary mr-1"></small>
