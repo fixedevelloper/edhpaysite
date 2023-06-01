@@ -109,10 +109,10 @@ class FrontController extends Controller
         if (!isset($customer)) {
             return redirect()->route('logincustomer');
         }
-        $soins = Session::get("products");
+        $products = Session::get("products");
         $total = 0.0;
         $arrays = [];
-        foreach ($soins as $item) {
+        foreach ($products as $item) {
             $soin = Product::query()->find($item['id']);
             if (isset($soin)) {
                 $arrays[] = $soin;
@@ -131,10 +131,10 @@ class FrontController extends Controller
             $reservation->total = 0.0;
             $reservation->user_id = $customer->id;
             $reservation->save();
-            $soins = Session::get("products");
+            $products = Session::get("products");
             $total = 0.0;
             $arrays = [];
-            foreach ($soins as $item) {
+            foreach ($products as $item) {
                 $soin = Product::query()->find($item['id']);
                 if (isset($soin)) {
                     $prestation = new LineProduct();

@@ -68,7 +68,7 @@ class PaypalService
         $items_array = [];
         $item = new Item();
         $item->setName($values['name'])
-            ->setCurrency("USD")
+            ->setCurrency(session('currency'))
             ->setQuantity(1)
             ->setPrice($pay_amount);
         array_push($items_array, $item);
@@ -115,11 +115,11 @@ class PaypalService
         } catch (\Exception $ex) {
             // Toastr::error('Your currency is not supported by PAYPAL.');
             logger($ex);
-            return back()->withErrors(['error' => 'Failed']);
+            return redirect()->route('callback.payment-fail')->withErrors(['error' => 'Failed']);
         }
 
         Session::put('error', 'Configure your paypal account.');
-        return back()->withErrors(['error' => 'Failed']);
+        return redirect()->route('callback.payment-fail')->withErrors(['error' => 'Failed']);
     }
     public function getPaymentStatus(Request $request)
     {
