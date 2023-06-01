@@ -57,6 +57,9 @@ class FrontController extends Controller
         $soins = Product::query()->inRandomOrder()->limit(3)->get();
         $features = Product::query()->orderByDesc('id')->inRandomOrder()->limit(20)->get();
         $recents = Product::query()->orderByDesc('id')->inRandomOrder()->limit(20)->get();
+      if (is_null(session()->get('currency'))){
+          Session::put('currency', "XAF");
+      }
         return view('front.home', [
             'soins' => $soins,
             'allItems' => $allItems,
