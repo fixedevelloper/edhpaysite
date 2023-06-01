@@ -177,7 +177,8 @@ class FrontController extends Controller
                 return $response;
             }
             if ($request->get('payement_method')=='paypal'){
-               return $this->paypalService->payWithpaypal(['amount'=>$total,'name'=>$customer->name]);
+               return $this->paypalService->payWithpaypal(['amount'=>$total,
+                   'name'=>$customer->name,'order_key'=>$orderkey]);
             }
             if ($request->get('payement_method')=='stripe'){
                 return StripeService::payment_process_3d(['amount'=>$total,'ref'=>$orderkey]);
