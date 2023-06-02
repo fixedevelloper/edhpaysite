@@ -43,6 +43,7 @@ class EDHPayService
                 'Content-Type' => 'application/json',
                 'device-id'=>"85874",
                 'device-model'=>"app.ecommerce",
+                'User-Agent'=>"Dart/5.0",
                 'os'=>"localhost"
                 // 'Authorization'=> 'Bearer ',
             ],
@@ -75,7 +76,7 @@ class EDHPayService
                 'device-id'=>"85874",
                 'device-model'=>"app.ecommerce",
                 'os'=>"localhost",
-                'User-Agent'=>"Dart/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko20100101 Firefox113.0",
+                'User-Agent'=>"Dart/5.0",
                 'Authorization'=> 'Bearer '.$token['content'],
             ],
             'body' => json_encode($data_)
