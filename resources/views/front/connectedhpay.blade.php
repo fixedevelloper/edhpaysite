@@ -34,7 +34,7 @@
                             {{csrf_field()}}
                             <div class="mb-3">
                                 <label for="emailaddress" class="form-label">Phone number</label>
-                                <input class="form-control" name="phone" type="tel" id="phone" required="" placeholder="Votre email">
+                                <input class="form-control" name="phone" type="tel" id="phone" required="" placeholder="+242064449012">
                             </div>
 
                             <div class="mb-3">

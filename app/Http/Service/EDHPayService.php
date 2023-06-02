@@ -54,13 +54,13 @@ class EDHPayService
         return json_decode($body,true);
     }
     public function makePayment($data){
-        logger(substr($data['phone'],0,3));
-        logger(substr($data['phone'],3));
+        logger(substr($data['phone'],0,4));
+        logger(substr($data['phone'],4));
         logger($data['pin']);
         $auth=[
-            'phone'=>substr($data['phone'],3),
+            'phone'=>substr($data['phone'],4),
             'password'=>$data['pin'],
-            'dial_country_code'=>"+".substr($data['phone'],0,3)
+            'dial_country_code'=>substr($data['phone'],0,4)
         ];
        $token= $this->connect($auth);
        $data_=[
