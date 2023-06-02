@@ -11,7 +11,7 @@ use mysql_xdevapi\Exception;
 
 class EDHPayService
 {
-    const BASE_URL = "http://localhost:8001";
+    const BASE_URL = "https://edhpay.agensic.com";
     private $flutter;
     /**
      * @var Client
