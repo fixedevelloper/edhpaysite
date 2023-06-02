@@ -85,7 +85,7 @@ class EDHPayService
             $body = $response->getBody();
             return json_decode($body,true);
         }catch (\Exception $exception){
-            return json_encode($exception);
+            return ["message"=>json_encode($exception)];
         }
 
     }
