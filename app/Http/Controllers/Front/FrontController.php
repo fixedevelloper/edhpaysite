@@ -250,8 +250,8 @@ class FrontController extends Controller
 
         return view('front.cart', [
             'totalht' => $total,
-            'totaltva' => $total * 0.21,
-            'total' => $total + ($total * 0.21),
+            'totaltva' => $total * 0,
+            'total' => $total + ($total * 0),
             'change'=>helpers::setPrice(\session()->get('currency')),
             'soins' => $arrays,
         ]);

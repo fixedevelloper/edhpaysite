@@ -22,7 +22,7 @@ class StripeService
         $YOUR_DOMAIN = url('/');
 
         $currencies_not_supported_cents = ['BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW', 'MGA', 'PYG', 'RWF', 'UGX', 'VND', 'VUV', 'XAF', 'XOF', 'XPF'];
-        $amount = intval($values['amount']*helpers::setPrice(session('currency')));
+        $amount = round($values['amount']*helpers::setPrice(session('currency')),2);
         $checkout_session = \Stripe\Checkout\Session::create([
             'payment_method_types' => ['card'],
             'line_items' => [[

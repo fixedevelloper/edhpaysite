@@ -8,7 +8,7 @@
         <div class="card px-xl-5">
             <div class="card-body">
                 <h5>Echec!</h5>
-                <p>Votre paiement a ete effectue avec success</p>
+                <p>Une erreur s'est produte lors de votre paiement</p>
             </div>
 
         </div>
