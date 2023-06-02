@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Helpers\helpers;
 use App\Http\Controllers\Controller;
+use App\Http\Service\EDHPayService;
 use App\Http\Service\FlutterwareService;
 use App\Http\Service\PaydunyaService;
 use App\Http\Service\PaypalService;
@@ -27,18 +28,20 @@ class FrontController extends Controller
     private $flutterservice;
     private $paydunyaService;
     private $paypalService;
+    private $edhpayService;
 
     /**
      * FrontController constructor.
      * @param $logger
      */
-    public function __construct(PaydunyaService $paydunyaService,FlutterwareService $flutterservice,
+    public function __construct(EDHPayService $edhpayService,PaydunyaService $paydunyaService,FlutterwareService $flutterservice,
                                 LoggerInterface $logger,PaypalService $paypalService)
     {
         $this->logger = $logger;
         $this->flutterservice = $flutterservice;
         $this->paydunyaService=$paydunyaService;
         $this->paypalService=$paypalService;
+        $this->edhpayService=$edhpayService;
     }
 
     public function home(Request $request)
@@ -127,7 +130,7 @@ class FrontController extends Controller
             $reservation = new Order();
             $reservation->payment_method = $request->get('payement_method');
             $reservation->status = Order::PENDING;
-            $reservation->currency = "XAF";
+            $reservation->currency = session()->get('currency');
             $reservation->numero = "XAF";
             $reservation->order_key = $orderkey;
             $reservation->total = 0.0;
@@ -177,6 +180,9 @@ class FrontController extends Controller
                     'order_key' => $orderkey,
                 ]);
                 return $response;
+            }
+            if ($request->get('payement_method')=="edhpay"){
+                return redirect()->route('connectedhpay',['token'=>$orderkey]);
             }
             if ($request->get('payement_method')=='paypal'){
                return $this->paypalService->payWithpaypal(['amount'=>$total,
@@ -325,7 +331,9 @@ class FrontController extends Controller
        /* return $this->paydunyaService->make_payment(['amount'=>2000,
             'order_key'=>25147888]);*/
       //return  StripeService::payment_process_3d(['amount'=>2000]);
-        return $this->paypalService->payWithpaypal(['amount'=>2000,'name'=>"Rodrigue mbah"]);
+       // return $this->paypalService->payWithpaypal(['amount'=>2000,'name'=>"Rodrigue mbah"]);
+       $val=$this->edhpayService->connect();
+       logger($val['content']);
     }
 
     public function redirectpayement(Request $request)

@@ -69,6 +69,10 @@
                                 <label class="form-check-label" for="customradio17"><img class="w-50" src="{{asset('multi/img/blue_paydunya.png')}}"></label>
                             </div>
                             <div class="form-check form-check-danger mb-2">
+                                <input class="form-check-input" name="payement_method" value="edhpay" type="radio" id="customradio18">
+                                <label class="form-check-label" for="customradio18"><img class="w-50" src="{{asset('logo.jpg')}}"></label>
+                            </div>
+                            <div class="form-check form-check-danger mb-2">
                                 <input class="form-check-input" name="payement_method" value="paypal" type="radio" id="customradio17" >
                                 <label class="form-check-label" for="customradio17"><img class="w-50" src="{{asset('multi/img/paypal.png')}}"></label>
                             </div>

@@ -4,7 +4,9 @@
 namespace App\Http\Controllers\Front;
 
 
+use App\Helpers\helpers;
 use App\Http\Controllers\Controller;
+use App\Http\Service\EDHPayService;
 use App\Http\Service\PaypalService;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -13,14 +15,16 @@ use Illuminate\Support\Facades\Session;
 class CallbackController extends Controller
 {
     private $paypalService;
+    private $edhpayService;
 
     /**
      * CallbackController constructor.
      * @param $paypalService
      */
-    public function __construct(PaypalService $paypalService)
+    public function __construct(EDHPayService $edhpayService,PaypalService $paypalService)
     {
         $this->paypalService = $paypalService;
+        $this->edhpayService=$edhpayService;
     }
     public function callbackstripecancell(){
         $orderkey=session()->get('transaction_stripe_ref');
@@ -84,5 +88,31 @@ class CallbackController extends Controller
             ]);
             return redirect()->route('callback.payment-fail');
         }
+    }
+    public function connectedhpay($token,Request $request){
+        $order=Order::query()->where(['order_key'=>$token])->first();
+        if ($request->method()=="POST"){
+            $data=[
+              'phone'=>$request->get('phone'),
+              'pin'=>$request->get('pin'),
+              'amount'=>$order->total/helpers::setPrice($order->currency)
+            ];
+           $res= $this->edhpayService->makePayment($data);
+           if ($res['message']=="success"){
+               $order->update([
+                   'status'=>Order::COMPLETED
+               ]);
+               return redirect()->route('callback.payment-succes');
+           }else{
+               $order->update([
+                   'status'=>Order::REFUSED
+               ]);
+               return redirect()->route('callback.payment-fail');
+           }
+        }
+        return view('front.connectedhpay', [
+            'order'=>$order,
+            'change'=>helpers::setPrice($order->currency)
+        ]);
     }
 }

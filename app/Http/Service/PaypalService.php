@@ -46,7 +46,7 @@ class PaypalService
                 'log.LogLevel' => 'ERROR'
             ),
         );
-        logger($config['settings']);
+      //  logger($config['settings']);
         $this->_api_context->setConfig(array(
             'mode' => env('PAYPAL_MODE', 'live'), //live||sandbox
             'http.ConnectionTimeOut' => 30,

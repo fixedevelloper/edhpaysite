@@ -106,6 +106,8 @@ Route::group(['middleware' => ['checkCustomer']], function () {
         ->name('detailorder');
     Route::match(array('GET', 'POST'),'/app/profil', [AccountController::class, 'profil'])
         ->name('app.profil');
+    Route::match(array('GET', 'POST'),'/connect-edhpay/{token}', [CallbackController::class, 'connectedhpay'])
+        ->name('connectedhpay');
 });
 Route::group(['middleware' => ['auth','isAdmin']], function () {
 
