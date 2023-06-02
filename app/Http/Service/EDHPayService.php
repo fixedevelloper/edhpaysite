@@ -85,7 +85,7 @@ class EDHPayService
             $body = $response->getBody();
             return json_decode($body,true);
         }catch (\Exception $exception){
-            return redirect()->route('callback.payment-fail')->withErrors($exception);
+            return redirect()->route('callback.payment-fail')->withErrors($exception->getMessage());
         }
 
     }
