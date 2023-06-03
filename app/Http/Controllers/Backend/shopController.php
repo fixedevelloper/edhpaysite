@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Backend;
 
 use App\Helpers\helpers;
 use App\Http\Controllers\Controller;
+use App\Models\LineProduct;
+use App\Models\Order;
+use App\Models\Product;
 use App\Models\Shop;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -111,9 +114,18 @@ class shopController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show($id)
     {
-        //
+        $shop = Shop::find($id);
+        $lines=LineProduct::query()->leftJoin('orders','line_products.order_id','=','orders.id')
+            ->leftJoin('products','line_products.product_id','=','products.id')
+            ->where(['products.shop_id'=>$id,'orders.status'=>Order::COMPLETED])->get();
+        $total_vente=0.0;
+        foreach ($lines as $line){
+          $total_vente+=$line->product->sale_price*$line->quantite;
+        }
+        $current_solde=$total_vente-$shop->retrait;
+        return view('back.shop.show', compact('shop','lines','total_vente','current_solde'));
     }
 
     /**
@@ -122,7 +134,7 @@ class shopController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view('back.caisse.update', compact('user'));
+        return view('back.shop.update', compact('user'));
     }
 
     /**

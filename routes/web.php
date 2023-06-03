@@ -221,6 +221,8 @@ Route::group(['middleware' => ['auth', 'isAdmin']], function () {
             ->name('create');
         Route::get('/edit/{id}', [shopController::class, 'edit'])
             ->name('edit');
+        Route::get('/detail/{id}', [shopController::class, 'show'])
+            ->name('detail');
         Route::post('/update/{id}', [shopController::class, 'update'])
             ->name('update');
         Route::get('/list', [shopController::class, 'index'])

@@ -62,12 +62,8 @@
                                               <td>
                                                   <div class="btn-group">
                                                       <a class="btn-sm btn-dark"
-                                                         href="{{route('seller.edit',[$agent['id']])}}">
-                                                          <i class="mdi mdi-shopping pl-1" aria-hidden="true"></i>
-                                                      </a>
-                                                      <a class="btn-sm btn-secondary"
-                                                         href="{{route('seller.edit',[$agent['id']])}}">
-                                                          <i class="mdi mdi-pencil pl-1" aria-hidden="true"></i>
+                                                         href="{{route('seller.detail',[$agent['id']])}}">
+                                                          <i class="mdi mdi-eye pl-1" aria-hidden="true"></i>
                                                       </a>
                                                       <a class="btn-sm btn-danger"
                                                          data-bs-toggle="modal" data-bs-target="#bs-delete-modal-sm">

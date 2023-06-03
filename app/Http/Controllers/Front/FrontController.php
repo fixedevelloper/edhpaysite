@@ -150,6 +150,7 @@ class FrontController extends Controller
                     $prestation = new LineProduct();
                     $prestation->order_id = $reservation->id;
                     $prestation->product_id = $soin->id;
+                    $prestation->quantite = $item['quantity'];
                     $prestation->save();
                     $total += $soin->sale_price * $item['quantity'];
                 }

@@ -8,6 +8,8 @@ use App\Helpers\helpers;
 use App\Http\Controllers\Controller;
 use App\Models\Categorie;
 use App\Models\Image;
+use App\Models\LineProduct;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Shop;
 use App\Models\User;
@@ -22,10 +24,15 @@ class SellerController extends Controller
         $user=Auth::user();
         $shop=Shop::query()->where(['user_id'=>$user->id])->first();
         $products=Product::query()->latest()->where(['shop_id'=>$shop->id])->paginate(Helpers::pagination_limit());
+        $lines=LineProduct::query()->leftJoin('orders','line_products.order_id','=','orders.id')
+            ->leftJoin('products','line_products.product_id','=','products.id')
+            ->where(['products.shop_id'=>$shop->id,'orders.status'=>Order::COMPLETED])->paginate(Helpers::pagination_limit());
+
         return view('front.seller.dashboard', [
             'shop'=>$shop,
             'user'=>$user,
-            'products'=>$products
+            'products'=>$products,
+            'lines'=>$lines
         ]);
     }
     public function seller_add_product(Request $request){

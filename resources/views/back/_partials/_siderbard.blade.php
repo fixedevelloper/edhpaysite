@@ -41,20 +41,6 @@
                         <span> Dashboard </span>
                     </a>
                 </li>
-                @if(auth()->user()->user_type==1)
-              {{--  <li>
-                    <a href="{{route('estheticien.index')}}">
-                        <i class="mdi mdi-owl"></i>
-                        <span> Mes soins </span>
-                    </a>
-                </li>--}}
-                <li>
-                    <a href="{{route('planingown')}}">
-                        <i class="mdi mdi-calendar-account"></i>
-                        <span> Mon planing </span>
-                    </a>
-                </li>
-                @endif
                 @if(auth()->user()->user_type==0)
                 <li class="menu-title mt-2">Apps</li>
                 <li>
