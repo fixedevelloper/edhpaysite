@@ -57,14 +57,24 @@
                     <div class="mt-3">
                         <form method="POST" action="{{route('changeimage')}}" enctype="multipart/form-data">
                             {{csrf_field()}}
-                            <div class="col-md-6 mb-3">
-                                <label for="name" class="form-label">Telephone</label>
-                                <div class="input-group">
-                                <input class="form-control" name="t_phone"
-                                       type="text" id="name" required=""
-                                       placeholder="+237675085296">
-                                <a class="btn input-group-text btn-primary waves-effect waves-light" type="button">Envonyer</a>
-                            </div></div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="name" class="form-label">Telephone</label>
+                                    <input class="form-control" name="t_phone"
+                                           type="text" id="name" required=""
+                                           placeholder="+237675085296">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="name" class="form-label">Montant</label>
+                                    <div class="input-group">
+                                        <input class="form-control" name="t_amount"
+                                               type="number" id="name" required=""
+                                               placeholder="0">
+                                        <a class="btn input-group-text btn-primary waves-effect waves-light" type="button">Envonyer</a>
+                                    </div>
+                                </div>
+                            </div>
+
                         </form>
                     </div>
                 </div>
