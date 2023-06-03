@@ -79,6 +79,11 @@ class FrontController extends Controller
 
         ]);
     }
+    public function service(Request $request){
+        return view('front.service', [
+
+        ]);
+    }
 
     public function product(Request $request)
     {
@@ -271,50 +276,24 @@ class FrontController extends Controller
 
     public function addcart(Request $request)
     {
-        // Session::remove('soins');
         $arrays = [];
-        // $soin_s[] = Session::get("soins");
-        //if (!array_key_exists($request->get('id'), $soin_s)) {
         Session::push('products', [
             'id' => $request->get('id'),
             'quantity' => $request->get('quantity')
         ]);
-        //  }
-        $soins = Session::get("products");
 
-        Session::put('products', array_unique($soins, SORT_REGULAR));
+        $products = Session::get("products");
+
+        Session::put('products', array_unique($products, SORT_REGULAR));
         $total = 0.0;
-        foreach (array_unique($soins, SORT_REGULAR) as $item) {
-            $soin = Product::query()->find($item['id']);
-            if (isset($soin)) {
-                $arrays[] = $soin;
-                $total += $soin->sale_price * $item['quantity'];
+        foreach (array_unique($products, SORT_REGULAR) as $item) {
+            $product = Product::query()->find($item['id']);
+            if (isset($product)) {
+                $arrays[] = $product;
+                $total += $product->sale_price * $item['quantity'];
             }
         }
         return redirect()->route('cart');
-    }
-
-    public function cartfinal(Request $request)
-    {
-        // Session::remove("soin_id");
-        // $soin_id = Session::get('soins')[2];
-        $users = User::query()->where("user_type", "=", 1)->get();
-        $soins = Session::get("soins");
-        $total = 0.0;
-        $arrays = [];
-        foreach (array_unique($soins) as $item) {
-            $soin = Soin::query()->find($item);
-            if (isset($soin)) {
-                $arrays[] = $soin;
-
-                $total += $soin->price;
-            }
-        }
-        return view('front.cartfinal', [
-            //  'soin_id' => $soin_id,
-            'soins' => $arrays,
-            'users' => $users
-        ]);
     }
 
     public function testpayement(Request $request)

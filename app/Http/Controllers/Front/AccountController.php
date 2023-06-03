@@ -17,6 +17,7 @@ class AccountController extends Controller
     {
         $user=Auth::user();
         $historiques=Order::query()->where('user_id','=',$user->id)
+            ->where(['status'=>Order::COMPLETED])
             ->latest()->paginate(Helpers::pagination_limit());
         return view('front.account', [
             'historiques'=>$historiques,

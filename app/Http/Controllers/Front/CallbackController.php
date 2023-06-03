@@ -73,15 +73,15 @@ class CallbackController extends Controller
         $status =$request->get("status");
         if ($status == 'successful') {
             $txn_ref = request()->tx_ref;
-            $o = explode('_', $txn_ref);
-            $order_id = intval( $o[1] );
+          //  $o = explode('_', $txn_ref);
             $order=Order::query()->where(['order_key'=>$txn_ref])->first();
             $order->update([
                'status'=>Order::COMPLETED
             ]);
+            return redirect()->route('callback.payment-succes');
         }else{
             $txn_ref = $request->get('tx_ref');
-            logger("---------".request()->tx_ref);
+           // logger("---------".request()->tx_ref);
             $order=Order::query()->where(['order_key'=>$txn_ref])->first();
             $order->update([
                 'status'=>Order::REFUSED

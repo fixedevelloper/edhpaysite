@@ -1,19 +1,15 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Backend\shopController;
+use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\CongeController;
 use App\Http\Controllers\Backend\CustomerController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\EstheticienController;
-use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\FournisseurController;
-use App\Http\Controllers\Backend\PlaningController;
+use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\ProductController;
-use App\Http\Controllers\Backend\CategoryController;
-use App\Http\Controllers\Backend\ReservationController;
-use App\Http\Controllers\Backend\SoinController;
-use App\Http\Controllers\Backend\TypeSoinController;
+use App\Http\Controllers\Backend\shopController;
 use App\Http\Controllers\Front\AccountController;
 use App\Http\Controllers\Front\CallbackController;
 use App\Http\Controllers\Front\FrontController;
@@ -43,13 +39,15 @@ Route::get('/shop', [FrontController::class, 'shop'])
     ->name('shop');
 Route::get('/products', [FrontController::class, 'product'])
     ->name('products');
+Route::get('/service', [FrontController::class, 'service'])
+    ->name('services');
 Route::get('/detailproduct/{slug}', [FrontController::class, 'detailproduct'])
     ->name('detailproduct');
-Route::match(array('GET', 'POST'),'/become_seller', [SellerController::class, 'become_seller'])
+Route::match(array('GET', 'POST'), '/become_seller', [SellerController::class, 'become_seller'])
     ->name('become_seller');
-Route::match(array('GET', 'POST'),'/seller/dashboard', [SellerController::class, 'seller_dashboard'])
+Route::match(array('GET', 'POST'), '/seller/dashboard', [SellerController::class, 'seller_dashboard'])
     ->name('seller_dashboard');
-Route::match(array('GET', 'POST'),'/seller/addproduct', [SellerController::class, 'seller_add_product'])
+Route::match(array('GET', 'POST'), '/seller/addproduct', [SellerController::class, 'seller_add_product'])
     ->name('seller_add_product');
 Route::get('/removesession', [FrontController::class, 'removesession'])
     ->name('removesession');
@@ -60,7 +58,7 @@ Route::get('/redirect-payement', [FrontController::class, 'redirectpayement'])
     ->name('redirectpayement');
 Route::get('/currency-change', [FrontController::class, 'currencychange'])
     ->name('currencychange');
-Route::group(['prefix' => 'callback', 'as' => 'callback.'],function (){
+Route::group(['prefix' => 'callback', 'as' => 'callback.'], function () {
     Route::match(array('GET', 'POST'), '/paydunya', [CallbackController::class, 'callbackpaydunya'])
         ->name('callbackpaydunya');
     Route::match(array('GET', 'POST'), '/flutterware', [CallbackController::class, 'callbackflutterware'])
@@ -69,8 +67,8 @@ Route::group(['prefix' => 'callback', 'as' => 'callback.'],function (){
         ->name('callbackstripesuccess');
     Route::match(array('GET', 'POST'), '/stripe-cancell', [CallbackController::class, 'callbackstripecancell'])
         ->name('callbackstripecancell');
-      Route::match(array('GET', 'POST'), '/paypal-status', [CallbackController::class, 'paypalstatus'])
-          ->name('paypal-status');
+    Route::match(array('GET', 'POST'), '/paypal-status', [CallbackController::class, 'paypalstatus'])
+        ->name('paypal-status');
     Route::get('/payment-fail', [CallbackController::class, 'paymentfail'])
         ->name('payment-fail');
     Route::get('/payment-succes', [CallbackController::class, 'paymentsucces'])
@@ -100,28 +98,20 @@ Route::match(array('GET', 'POST'), '/changeimage', [AuthController::class, 'chan
 Route::group(['middleware' => ['checkCustomer']], function () {
     Route::get('/app/account', [AccountController::class, 'account'])
         ->name('account');
-    Route::match(array('GET', 'POST'),'/checkout', [FrontController::class, 'checkout'])
+    Route::match(array('GET', 'POST'), '/checkout', [FrontController::class, 'checkout'])
         ->name('checkout');
-    Route::match(array('GET', 'POST'),'/showdetail/{order_key}', [FrontController::class, 'detailorder'])
+    Route::match(array('GET', 'POST'), '/showdetail/{order_key}', [FrontController::class, 'detailorder'])
         ->name('detailorder');
-    Route::match(array('GET', 'POST'),'/app/profil', [AccountController::class, 'profil'])
+    Route::match(array('GET', 'POST'), '/app/profil', [AccountController::class, 'profil'])
         ->name('app.profil');
-    Route::match(array('GET', 'POST'),'/connect-edhpay/{token}', [CallbackController::class, 'connectedhpay'])
+    Route::match(array('GET', 'POST'), '/connect-edhpay/{token}', [CallbackController::class, 'connectedhpay'])
         ->name('connectedhpay');
 });
-Route::group(['middleware' => ['auth','isAdmin']], function () {
+Route::group(['middleware' => ['auth', 'isAdmin']], function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
-    Route::get('/reservation', [ReservationController::class, 'index'])
-        ->name('reservation');
-    Route::get('/reservation/pending', [ReservationController::class, 'pending'])
-        ->name('reservation_pending');
-    Route::get('/reservation/reject', [ReservationController::class, 'reject'])
-        ->name('reservation_reject');
-    Route::get('/reservation/edit/{id}', [ReservationController::class, 'edit'])
-        ->name('reservation.edit');
-    Route::group(['prefix' => 'conge', 'as' => 'conge.'],function (){
+    Route::group(['prefix' => 'conge', 'as' => 'conge.'], function () {
         Route::match(array('GET', 'POST'), 'create', [CongeController::class, 'create'])
             ->name('create');
         Route::get('/list', [CongeController::class, 'index'])
@@ -134,7 +124,7 @@ Route::group(['middleware' => ['auth','isAdmin']], function () {
             ->name('store');
 
     });
-    Route::group(['prefix' => 'customer', 'as' => 'customer.'],function (){
+    Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
         Route::match(array('GET', 'POST'), 'create', [CustomerController::class, 'create'])
             ->name('create');
         Route::get('/edit/{id}', [CustomerController::class, 'edit'])
@@ -149,7 +139,7 @@ Route::group(['middleware' => ['auth','isAdmin']], function () {
             ->name('destroy');
 
     });
-    Route::group(['prefix' => 'estheticien', 'as' => 'estheticien.'],function (){
+    Route::group(['prefix' => 'estheticien', 'as' => 'estheticien.'], function () {
         Route::match(array('GET', 'POST'), 'create', [EstheticienController::class, 'create'])
             ->name('create');
         Route::get('/edit/{id}', [EstheticienController::class, 'edit'])
@@ -164,7 +154,7 @@ Route::group(['middleware' => ['auth','isAdmin']], function () {
             ->name('destroy');
 
     });
-    Route::group(['prefix' => 'order', 'as' => 'order.'],function (){
+    Route::group(['prefix' => 'order', 'as' => 'order.'], function () {
         Route::match(array('GET', 'POST'), 'create', [OrderController::class, 'create'])
             ->name('create');
         Route::get('/edit/{id}', [OrderController::class, 'edit'])
@@ -181,7 +171,7 @@ Route::group(['middleware' => ['auth','isAdmin']], function () {
             ->name('destroy');
 
     });
-    Route::group(['prefix' => 'product_type', 'as' => 'product_type.'],function (){
+    Route::group(['prefix' => 'product_type', 'as' => 'product_type.'], function () {
         Route::match(array('GET', 'POST'), 'create', [CategoryController::class, 'create'])
             ->name('create');
         Route::get('/edit/{id}', [CategoryController::class, 'edit'])
@@ -196,7 +186,7 @@ Route::group(['middleware' => ['auth','isAdmin']], function () {
             ->name('destroy');
 
     });
-    Route::group(['prefix' => 'fournisseur', 'as' => 'fournisseur.'],function (){
+    Route::group(['prefix' => 'fournisseur', 'as' => 'fournisseur.'], function () {
         Route::match(array('GET', 'POST'), 'create', [FournisseurController::class, 'create'])
             ->name('create');
         Route::get('/edit/{id}', [FournisseurController::class, 'edit'])
@@ -211,7 +201,7 @@ Route::group(['middleware' => ['auth','isAdmin']], function () {
             ->name('destroy');
 
     });
-    Route::group(['prefix' => 'product', 'as' => 'product.'],function (){
+    Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
         Route::match(array('GET', 'POST'), 'create', [ProductController::class, 'create'])
             ->name('create');
         Route::get('/edit/{id}', [ProductController::class, 'edit'])
@@ -226,7 +216,7 @@ Route::group(['middleware' => ['auth','isAdmin']], function () {
             ->name('destroy');
 
     });
-    Route::group(['prefix' => 'seller', 'as' => 'seller.'],function (){
+    Route::group(['prefix' => 'seller', 'as' => 'seller.'], function () {
         Route::match(array('GET', 'POST'), 'create', [shopController::class, 'create'])
             ->name('create');
         Route::get('/edit/{id}', [shopController::class, 'edit'])
@@ -243,46 +233,7 @@ Route::group(['middleware' => ['auth','isAdmin']], function () {
             ->name('destroy');
 
     });
-    Route::group(['prefix' => 'soin', 'as' => 'soin.'],function (){
-        Route::match(array('GET', 'POST'), 'create', [SoinController::class, 'create'])
-            ->name('create');
-        Route::get('/list', [SoinController::class, 'index'])
-            ->name('index');
-        Route::get('/edit/{id}', [SoinController::class, 'edit'])
-            ->name('edit');
-        Route::post('/update/{id}', [SoinController::class, 'update'])
-            ->name('update');
-        Route::match(array('GET', 'POST'),'/product/{id}', [SoinController::class, 'product'])
-            ->name('product');
-        Route::get('/removeproduct', [SoinController::class, 'removeproduct'])
-            ->name('removeproduct');
-        Route::post('/store', [SoinController::class, 'store'])
-            ->name('store');
-        Route::delete('/destroy', [SoinController::class, 'destroy'])
-            ->name('destroy');
-    });
-    Route::group(['prefix' => 'typesoin', 'as' => 'typesoin.'],function (){
-        Route::match(array('GET', 'POST'), 'create', [TypeSoinController::class, 'create'])
-            ->name('create');
-        Route::get('/list', [TypeSoinController::class, 'index'])
-            ->name('index');
-        Route::get('/edit/{id}', [TypeSoinController::class, 'edit'])
-            ->name('edit');
-        Route::post('/update/{id}', [TypeSoinController::class, 'update'])
-            ->name('update');
-        Route::post('/store', [TypeSoinController::class, 'store'])
-            ->name('store');
-        Route::delete('/destroy', [TypeSoinController::class, 'destroy'])
-            ->name('destroy');
-    });
-    Route::group(['prefix' => 'planing', 'as' => 'planing.'],function (){
-        Route::match(array('GET', 'POST'), 'create', [SoinController::class, 'create'])
-            ->name('create');
-        Route::get('/list', [SoinController::class, 'index'])
-            ->name('index');
-        Route::post('/store', [SoinController::class, 'store'])
-            ->name('store');
-    });
+
 
     Route::get('/connexions', [HomeComtroller::class, 'connexion'])
         ->name('connexion');
