@@ -50,6 +50,7 @@ class FlutterwareService
                 "email" => $data['email'],
                 "phone" => $data['phone']
             ],
+            'payment_options'=>'mobilemoneyfranco, account, mpesa, card',
             'customizations' => [
                 'title' => "EDHPay",
                 'logo' => "https://edhpay.com/logo.jpg"
