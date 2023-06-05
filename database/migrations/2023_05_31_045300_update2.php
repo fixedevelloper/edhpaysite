@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->text('free_view')->nullable();
-            $table->string('file')->nullable();
-            $table->text('paid_view')->nullable();
-            $table->boolean('isvirtual')->nullable()->default(false);
+            $table->boolean('isdownloable')->nullable();
+            $table->string('downloable_file')->nullable();
+            $table->string('downloable_filename')->nullable();
+            $table->integer('downloable_expired_date')->nullable();
         });
-        Schema::table('orders', function (Blueprint $table) {
-            $table->text('reference')->nullable();
+        Schema::table('shops', function (Blueprint $table) {
+            $table->float('total_retrait')->default(0.0);
         });
     }
 

@@ -50,21 +50,15 @@
                                                 <td>
                                                     {{$agent['user']->name}}
                                                 </td>
-                                              {{--  <td>
-                                                    @if($agent['typefacture']=="soins")
-                                                   <span class="badge badge-soft-success">{{$agent['typefacture']}}</span>
-                                                    @else
-                                                        <span class="badge badge-soft-danger">{{$agent['typefacture']}}</span>
-                                                    @endif
-                                                </td>--}}
+
                                                 <td>
-                                                    {{$agent['montantht']}} FCFA
+                                                    {{$agent['totalht']}} FCFA
                                                 </td>
                                                 <td>
-                                                    {{$agent['tva']}} FCFA
+                                                    {{$agent['totaltva']}} FCFA
                                                 </td>
                                                 <td>
-                                                    {{$agent['montantttc']}} FCFA
+                                                    {{$agent['total']}} FCFA
                                                 </td>
                                                 <td>
                                                     <a class="btn-sm btn-secondary p-1 pr-2 m-1"

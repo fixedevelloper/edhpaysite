@@ -22,17 +22,31 @@ class SellerController extends Controller
 {
     public function seller_dashboard(Request $request){
         $user=Auth::user();
+        if (is_null($user)){
+            return redirect('/');
+        }
         $shop=Shop::query()->where(['user_id'=>$user->id])->first();
         $products=Product::query()->latest()->where(['shop_id'=>$shop->id])->paginate(Helpers::pagination_limit());
         $lines=LineProduct::query()->leftJoin('orders','line_products.order_id','=','orders.id')
             ->leftJoin('products','line_products.product_id','=','products.id')
             ->where(['products.shop_id'=>$shop->id,'orders.status'=>Order::COMPLETED])->paginate(Helpers::pagination_limit());
-
+        $total_vente=0.0;
+        $downloads=[];
+        foreach ($lines as $line){
+            if ($line->product->isdownloable){
+                $downloads[]=$line;
+            }
+            $total_vente+=$line->product->sale_price*$line->quantite;
+        }
+        $current_solde=$total_vente-$shop->retrait;
         return view('front.seller.dashboard', [
             'shop'=>$shop,
             'user'=>$user,
             'products'=>$products,
-            'lines'=>$lines
+            'lines'=>$lines,
+            'total_vente'=>$total_vente,
+            'current_solde'=>$current_solde,
+
         ]);
     }
     public function seller_add_product(Request $request){
@@ -67,6 +81,15 @@ class SellerController extends Controller
                 $user->slug = Str::slug($request->libelle);
                 $user->categorie_id = $request->product_type_id;
                 $user->shop_id=$shop->id;
+                $user->isvirtual = $request->virtual == 'on' ? true : false;
+                $user->isdownloable = $request->isdownloable == 'on' ? true : false;
+                $user->paid_view = $request->paidview;
+                $user->free_view = $request->freeview;
+              if ($request->isdownloable == 'on'){
+                    $user->downloable_file = Helpers::upload('downloads/', $request->file('downloable_file')->guessExtension(), $request->file('downloable_file'));
+                    $user->downloable_filename = $request->freeview;
+                    $user->downloable_expired_date = $request->downloable_day;
+                }
                 $user->save();
                 $image=new Image();
                 $image->src=Helpers::upload('images/', $request->file('image')->guessExtension(), $request->file('image'));

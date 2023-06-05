@@ -20,6 +20,10 @@ class Product extends Model
         'paid_view',
         'free_view',
         'categorie_id',
+        'isdownloable',
+        'downloable_file',
+        'downloable_filename',
+        'downloable_expired_date',
         'shop_id'
     ];
     public function categorie() {

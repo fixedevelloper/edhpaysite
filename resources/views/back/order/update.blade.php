@@ -13,15 +13,23 @@
                     <div class="col-8">
                         <div class="card">
                             <div class="card-body">
-                                <dl class="row-md jh-entity-details">
-                                    <dt>Client</dt>
-                                    <dd>{{$order->user->name}} </dd>
-                                    <dt>Total:</dt>
-                                    <dd>{{$order->totalht}} FCFA </dd>
-                                    <dt>Total Ttc</dt>
-                                    <dd>{{$order->total}} FCFA</dd>
-                                    <dt>Status</dt>
-                                    <dd>{{$order->status}} </dd>
+                                <dl class="row jh-entity-details">
+                                    <div class="col-md-6">
+                                        <dt>Client</dt>
+                                        <dd>{{$order->user->name}} </dd>
+                                        <dt>Mode de paiement:</dt>
+                                        <dd>{{$order->payment_method}} </dd>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <dt>Total:</dt>
+                                        <dd>{{$order->totalht}} FCFA </dd>
+                                        <dt>Total Ttc</dt>
+                                        <dd>{{$order->total}} FCFA</dd>
+                                        <dt>Status</dt>
+                                        <dd>{{$order->status}} </dd>
+                                    </div>
+
+
                                 </dl>
                                 <table class="table table-bordered">
                                     <thead>

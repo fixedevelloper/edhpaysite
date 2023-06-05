@@ -55,7 +55,11 @@
                 </div>
                 <div class="tab-pane fade" id="retrait-fond" role="tabpanel" aria-labelledby="v-pills-home-tab">
                     <div class="mt-3">
-                        <form method="POST" action="{{route('changeimage')}}" enctype="multipart/form-data">
+                        <h4>Total des ventes: {{$total_vente}} FCFA</h4>
+                        <h4>Solde courant: {{$current_solde}} FCFA</h4>
+                    </div>
+                        <div class="mt-3">
+                        <form method="POST" action="#" enctype="multipart/form-data">
                             {{csrf_field()}}
                             <div class="row">
                                 <div class="col-md-6 mb-3">

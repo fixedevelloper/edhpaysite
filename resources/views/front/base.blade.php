@@ -58,6 +58,30 @@
 </script>
 <script>
     $(function () {
+        if ($('#virtual').is(':checked')){
+            $('#contenu-virtual').show()
+        }else {
+            $('#contenu-virtual').hide()
+        }
+        if ($('#isdownloable').is(':checked')){
+            $('#contenu-downloable').show()
+        }else {
+            $('#contenu-downloable').hide()
+        }
+        $('#isdownloable').change(function () {
+            if ($(this).is(':checked')){
+                $('#contenu-downloable').show()
+            }else {
+                $('#contenu-downloable').hide()
+            }
+        });
+        $('#virtual').change(function () {
+            if ($(this).is(':checked')){
+                $('#contenu-virtual').show()
+            }else {
+                $('#contenu-virtual').hide()
+            }
+        });
         $("input[name='flexpersonnel']").change(function () {
           /*  $.ajax({
                 url: configs.routes.calculplaning,

@@ -39,9 +39,9 @@ class ProductController extends Controller
         }
 
         $agents = $agents->latest()->paginate(Helpers::pagination_limit())->appends($query_param);
-       // $fournisseurs=Fournisseur::all();
-        $categories=Categorie::all();
-        return view('back.product.index', compact('agents', 'search','categories'));
+        // $fournisseurs=Fournisseur::all();
+        $categories = Categorie::all();
+        return view('back.product.index', compact('agents', 'search', 'categories'));
     }
 
     /**
@@ -49,9 +49,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories=Categorie::all();
+        $categories = Categorie::all();
         return view('back.product.create', [
-            'categories'=>$categories
+            'categories' => $categories
         ]);
     }
 
@@ -71,7 +71,7 @@ class ProductController extends Controller
 
         $email = $request->email;
         $agent = Product::where(['libelle' => $email])->first();
-        if (isset($agent)){
+        if (isset($agent)) {
             //  Toastr::warning(translate('This phone number is already taken'));
             return back();
         }
@@ -86,16 +86,22 @@ class ProductController extends Controller
             $user->price = $request->price;
             $user->slug = Str::slug($request->libelle);
             $user->categorie_id = $request->product_type_id;
-            $user->isvirtual = $request->virtual=='on'?true:false;
-               $user->paid_view = $request->paidview;
-               $user->free_view = $request->freeview;
-           // $user->fournisseur_id = isset($request->fournisseur_id)?$request->fournisseur_id:null;
+            $user->isvirtual = $request->virtual == 'on' ? true : false;
+            $user->isdownloable = $request->isdownloable == 'on' ? true : false;
+            $user->paid_view = $request->paidview;
+            $user->free_view = $request->freeview;
+            // $user->fournisseur_id = isset($request->fournisseur_id)?$request->fournisseur_id:null;
+            if ($request->isdownloable == 'on'){
+                $user->downloable_file = Helpers::upload('downloads/', $request->file('downloable_file')->guessExtension(), $request->file('downloable_file'));
+                $user->downloable_filename = $request->freeview;
+                $user->downloable_expired_date = $request->downloable_day;
+            }
             $user->save();
-            $image=new Image();
-            $image->src=Helpers::upload('images/', $request->file('image')->guessExtension(), $request->file('image'));
-            $image->name=$request->file('image')->getFilename();
-            $image->alt=$request->file('image')->getFilename();
-            $image->position=0;
+            $image = new Image();
+            $image->src = Helpers::upload('images/', $request->file('image')->guessExtension(), $request->file('image'));
+            $image->name = $request->file('image')->getFilename();
+            $image->alt = $request->file('image')->getFilename();
+            $image->position = 0;
             $image->save();
             $user->images()->attach($image->id);
         });
@@ -118,8 +124,8 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
-        $categories=Categorie::all();
-        return view('back.product.update', compact('product','categories'));
+        $categories = Categorie::all();
+        return view('back.product.update', compact('product', 'categories'));
     }
 
     /**
@@ -128,22 +134,23 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $product = Product::query()->find($id);
-        $image=$product->images[0];
-        if (!is_null($request->file('image'))){
+        $image = $product->images[0];
+        if (!is_null($request->file('image'))) {
             $image->update([
-                'src'=>Helpers::upload('images/', $request->file('image')->guessExtension(), $request->file('image'))
+                'src' => Helpers::upload('images/', $request->file('image')->guessExtension(), $request->file('image'))
             ]);
         }
-            $product->update([
+        $product->update([
             'libelle' => $request->libelle,
             'description' => $request->description,
             'quantite' => $request->quantite,
             //'image' => is_null($request->file('image'))?,
             'sale_price' => $request->sale_price,
+            'categorie_id'=>$request->product_type_id,
             'price' => $request->price,
-                'isvirtual' => $request->virtual=='on'?true:false,
-                'paid_view' => $request->paidview,
-                'free_view' => $request->freeview,
+            'isvirtual' => $request->virtual == 'on' ? true : false,
+            'paid_view' => $request->paidview,
+            'free_view' => $request->freeview,
         ]);
         return redirect()->route('product.index');
     }
@@ -153,7 +160,7 @@ class ProductController extends Controller
      */
     public function destroy(Request $request)
     {
-        $id=$request->get('item');
+        $id = $request->get('item');
         $conge = Product::query()->find($id);
         $conge->delete();
         return response()->json(['data' => $conge, 'status' => true]);

@@ -48,10 +48,15 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="mb-3 col-md-12">
+                                        <div class="mb-3 col-md-6">
                                             <label for="virtual" class="form-label">Produit virtuel?</label>
                                             <input id="virtual" class="form-check" name="virtual" type="checkbox"
                                                       placeholder="">
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="isdownloable" class="form-label">Produit téléchargeable?</label>
+                                            <input id="isdownloable" class="form-check" name="isdownloable" type="checkbox"
+                                                   >
                                         </div>
                                         <div class="mb-3 col-md-12">
                                             <label for="name" class="form-label">Image</label>
@@ -81,37 +86,22 @@
                                                        placeholder="">
                                             </textarea>
                                         </div>
-                                    </div>
-                                  {{--  <div class="row mb-3">
-                                        <!-- Preview -->
-                                        <div class="dropzone-previews mt-3" id="file-previews"></div>
-                                        <!-- file preview template -->
-                                        <div class="d-none" id="uploadPreviewTemplate">
-                                            <div class="card mt-1 mb-0 shadow-none border">
-                                                <div class="p-2">
-                                                    <div class="row align-items-center">
-                                                        <div class="col-auto">
-                                                            <img data-dz-thumbnail src="#"
-                                                                 class="avatar-sm rounded bg-light" alt="">
-                                                        </div>
-                                                        <div class="col ps-0">
-                                                            <a href="javascript:void(0);" class="text-muted fw-bold"
-                                                               data-dz-name></a>
-                                                            <p class="mb-0" data-dz-size></p>
-                                                        </div>
-                                                        <div class="col-auto">
-                                                            <!-- Button -->
-                                                            <a href="" class="btn btn-link btn-lg text-muted"
-                                                               data-dz-remove>
-                                                                <i class="dripicons-cross"></i>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>--}}
 
+                                    </div>
+                                    <div id="contenu-downloable" class="row">
+                                        <div class="mb-3 col-md-6">
+                                            <label for="name" class="form-label">Fichier</label>
+                                            <input class="form-control"
+                                                   name="downloable_file" type="file" id="file" required=""
+                                            >
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="downloable_day" class="form-label">Jours d'expiration</label>
+                                            <input class="form-control"
+                                                   name="downloable_day" type="number" id="downloable_day" min="0"
+                                            >
+                                        </div>
+                                    </div>
                                     <div class="row mt-3 d-grid text-center">
                                         <button class="btn btn-success" type="submit"> Enregistrer</button>
                                     </div>

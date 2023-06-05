@@ -27,7 +27,10 @@
                                 Dashboard</a>
                             <a class="nav-link mb-1" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages"
                                aria-selected="false">
-                                Historiques</a>
+                                Commandes</a>
+                            <a class="nav-link mb-1" id="download-tab" data-toggle="pill" href="#download" role="tab" aria-controls="v-pills-messages"
+                               aria-selected="false">
+                                Téléchargements</a>
                             <a class="nav-link mb-1" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile"
                                aria-selected="false">
                                 Profile</a>
@@ -208,6 +211,46 @@
 
                     </div>
                 </div>
+                <div class="tab-pane fade" id="download" role="tabpanel" aria-labelledby="download-tab">
+                    <div class="table-responsive datatable-custom">
+                        <table
+                            class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table">
+                            <thead class="thead-light">
+                            <tr>
+                                <th>Product</th>
+                                <th>Téléchargement</th>
+                                <th>Date d'expiration</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+
+                            <tbody id="set-rows">
+                            @foreach($downloads as $download)
+                                <tr>
+                                    <td>
+                                        {{$download['product']->libelle}}
+                                    </td>
+
+                                    <td>
+                                       5
+                                    </td>
+
+                                    <td>
+                                        {{$download['product']->downloable_expired_date}}
+                                    </td>
+                                    <td>
+                                        @if($download['status']==\App\Models\Order::COMPLETED)
+                                            <a class="btn btn-primary btn-sm rounded-pill" href="{{route('downloadfile',['id'=>$download['product']->id])}}">Telecharger</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
                 <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
                 </div>
             </div>

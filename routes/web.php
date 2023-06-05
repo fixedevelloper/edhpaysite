@@ -43,6 +43,8 @@ Route::get('/service', [FrontController::class, 'service'])
     ->name('services');
 Route::get('/detailproduct/{slug}', [FrontController::class, 'detailproduct'])
     ->name('detailproduct');
+Route::get('/downloadfile/{id}', [AccountController::class, 'downloadFile'])
+    ->name('downloadfile');
 Route::match(array('GET', 'POST'), '/become_seller', [SellerController::class, 'become_seller'])
     ->name('become_seller');
 Route::match(array('GET', 'POST'), '/seller/dashboard', [SellerController::class, 'seller_dashboard'])
