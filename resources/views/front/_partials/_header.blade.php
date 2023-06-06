@@ -83,6 +83,11 @@
                 <i class="fa fa-angle-down text-dark"></i>
             </a>
             <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
+                <div class="navbar-nav w-100">
+                    @foreach(\App\Models\Categorie::all() as $categorie)
+                    <a href="{{route('categorieproducts',['slug'=>$categorie->slug])}}" class="nav-item nav-link">{{$categorie->libelle}}</a>
+                    @endforeach
+                </div>
               {{--  <div class="navbar-nav w-100">
                     <div class="nav-item dropdown dropright">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Dresses <i class="fa fa-angle-right float-right mt-1"></i></a>
@@ -116,6 +121,14 @@
                     <div class="navbar-nav mr-auto py-0">
                         <a href="{{route('home')}}" class="nav-item nav-link {{request()->routeIs('home')?'active':''}}">Accueil</a>
                         <a href="{{route('services')}}" class="nav-item nav-link {{request()->routeIs('services')?'active':''}}">Services</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Boutiques <i class="fa fa-angle-down mt-1"></i></a>
+                            <div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
+                                @foreach(\App\Models\Shop::all() as $shop)
+                                    <a href="{{route('shop_detail',['id'=>$shop->id])}}" class="dropdown-item">{{$shop->libelle}}</a>
+                                @endforeach
+                            </div>
+                        </div>
                         <a href="{{route('products')}}" class="nav-item nav-link {{request()->routeIs('products')?'active':''}}">Nos produits</a>
                         <a href="{{route('become_seller')}}" class="nav-item nav-link {{request()->routeIs('become_seller')?'active':''}}">Devenir vendeur</a>
                         <a href="{{route('contact')}}" class="nav-item nav-link {{request()->routeIs('contact')?'active':''}}">Contact</a>

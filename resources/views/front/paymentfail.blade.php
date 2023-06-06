@@ -8,7 +8,7 @@
         <div class="row justify-content-center">
             <div class="col-md-6 card px-xl-5">
                 <div class="card-img text-center">
-                    <img class="img-fluid w-75" src="{{asset('multi/img/error_.png')}}">
+                    <img class="img-fluid w-50" src="{{asset('multi/img/error_.png')}}">
                 </div>
                 <div class="text-center card-body">
                     <h2 class="text-danger">Echec de paiement!</h2>

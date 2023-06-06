@@ -110,7 +110,15 @@ class FrontController extends Controller
             'change'=>helpers::setPrice(\session()->get('currency')),
         ]);
     }
-
+    public function categorieproducts($slug){
+        $categorie=Categorie::query()->firstWhere(['slug'=>$slug]);
+        $products=Product::query()->where('categorie_id','=',$categorie->id)->latest()->paginate(Helpers::pagination_limit());
+        return view('front.categorieproducts', [
+            'products' => $products,
+            'categorie'=>$categorie,
+            'change'=>helpers::setPrice(\session()->get('currency')),
+        ]);
+    }
     public function checkout(Request $request)
     {
         $customer = Auth::user();

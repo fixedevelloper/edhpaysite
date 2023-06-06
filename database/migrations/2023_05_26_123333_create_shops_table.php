@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('adresse');
             $table->string('country');
             $table->string('phone');
-
+            $table->string('slug');
             $table->foreignId('image_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();

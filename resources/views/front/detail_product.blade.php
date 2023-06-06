@@ -52,7 +52,7 @@
                 <div class="h-100 bg-light p-30">
                     <h3>{{$product->libelle}}</h3>
                     @if($product->shop)
-                    <p class="mb-4"><a href="{{route('shop',['slug'=>$product->shop->slug])}}">Vendeur: {{$product->shop->libelle}}</a></p>
+                    <p class="mb-4"><a href="{{route('shop_detail',['id'=>$product->shop->id])}}">Vendeur: {{$product->shop->libelle}}</a></p>
                     @endif
                         <div class="d-flex mb-3">
                         <div class="text-primary mr-2">

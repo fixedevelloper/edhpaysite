@@ -137,4 +137,12 @@ class SellerController extends Controller
 
         ]);
     }
+    public function shop_detail($shop){
+        $products=Product::query()->where(['shop_id'=>$shop])->latest()->paginate(Helpers::pagination_limit());
+        return view('front.seller.detail_shop', [
+            'products'=>$products,
+            'change'=>helpers::setPrice(\session()->get('currency')),
+            'shop'=>Shop::query()->find($shop)
+        ]);
+    }
 }
