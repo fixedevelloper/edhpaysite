@@ -16,6 +16,7 @@
                     <a href="{{route('currencychange',['currency'=>'EUR'])}}" class="dropdown-item" type="button">EUR</a>
                     <a href="{{route('currencychange',['currency'=>'USD'])}}" class="dropdown-item" type="button">USD</a>
                     <a href="{{route('currencychange',['currency'=>'XAF'])}}" class="dropdown-item" type="button">XAF</a>
+                    <a href="{{route('currencychange',['currency'=>'XOF'])}}" class="dropdown-item" type="button">XOF</a>
                     <a href="{{route('currencychange',['currency'=>'GBP'])}}" class="dropdown-item" type="button">GBP</a>
                     <a href="{{route('currencychange',['currency'=>'CAD'])}}" class="dropdown-item" type="button">CAD</a>
                 </div>

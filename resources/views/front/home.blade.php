@@ -143,7 +143,7 @@
                         <div class="text-center py-4">
                             <a class="h6 text-decoration-none text-truncate" href="{{route('detailproduct',['slug'=>$item->slug])}}">{{$item->libelle}}</a>
                             <div class="d-flex align-items-center justify-content-center mt-2">
-                                <h5>{{round($item->sale_price*$change,2)}} {{session()->get('currency')==="XAF"?'FCFA':session()->get('currency')}}</h5>
+                                <h5>{{round($item->sale_price*$change,2)}} {{session()->get('currency')==="XAF" || session()->get('currency')==="XOF" ?'FCFA':session()->get('currency')}}</h5>
                             </div>
                             <div class="d-flex align-items-center justify-content-center mb-1">
                                 <small class="fa fa-star text-primary mr-1"></small>
