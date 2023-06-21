@@ -76,6 +76,9 @@ Route::group(['prefix' => 'callback', 'as' => 'callback.'], function () {
         ->name('callbackstripecancell');
     Route::match(array('GET', 'POST'), '/paypal-status', [CallbackController::class, 'paypalstatus'])
         ->name('paypal-status');
+    Route::match(array('GET', 'POST'), '/callbackcryptomuss', [CallbackController::class, 'callbackcryptomuss'])
+        ->name('callbackcryptomuss');
+
     Route::get('/payment-fail', [CallbackController::class, 'paymentfail'])
         ->name('payment-fail');
     Route::get('/payment-succes', [CallbackController::class, 'paymentsucces'])

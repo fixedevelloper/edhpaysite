@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Helpers\helpers;
 use App\Http\Controllers\Controller;
+use App\Http\Service\CryptomusService;
 use App\Http\Service\EDHPayService;
 use App\Http\Service\FlutterwareService;
 use App\Http\Service\PaydunyaService;
@@ -29,12 +30,13 @@ class FrontController extends Controller
     private $paydunyaService;
     private $paypalService;
     private $edhpayService;
+    private $cryptomusService;
 
     /**
      * FrontController constructor.
      * @param $logger
      */
-    public function __construct(EDHPayService $edhpayService,PaydunyaService $paydunyaService,FlutterwareService $flutterservice,
+    public function __construct(CryptomusService $cryptomusService,EDHPayService $edhpayService,PaydunyaService $paydunyaService,FlutterwareService $flutterservice,
                                 LoggerInterface $logger,PaypalService $paypalService)
     {
         $this->logger = $logger;
@@ -42,6 +44,7 @@ class FrontController extends Controller
         $this->paydunyaService=$paydunyaService;
         $this->paypalService=$paypalService;
         $this->edhpayService=$edhpayService;
+        $this->cryptomusService=$cryptomusService;
     }
 
     public function home(Request $request)
@@ -205,7 +208,13 @@ class FrontController extends Controller
             if ($request->get('payement_method')=='stripe'){
                 return StripeService::payment_process_3d(['amount'=>$total,'ref'=>$orderkey]);
             }
-
+            if ($request->get('payement_method')=='cryptomus'){
+                return $this->cryptomusService->make_payment([
+                    "amount" => $total,
+                    'order_key' => $orderkey,
+                    'order_id'=>$reservation->id
+                ]);
+            }
 
         }
         return view('front.checkout', [

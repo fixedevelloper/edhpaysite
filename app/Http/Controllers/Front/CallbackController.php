@@ -115,4 +115,30 @@ class CallbackController extends Controller
             'change'=>helpers::setPrice($order->currency)
         ]);
     }
+    public function callbackcryptomuss(Request $request)
+    {
+        try {
+            // if (isset($_POST['data'])){
+            logger(">>>>>++++ CRYTOMUS CALLBACK" . json_encode($_POST['data']));
+
+            $status = $_POST['status'];
+            $order=Order::query()->where(['order_key'=>$request->get('order_key')])->first();
+            if ($status == 'paid' || $status == 'paid_over') {
+                $order->update([
+                    'status'=>Order::COMPLETED
+                ]);
+                return redirect()->route('callback.payment-succes');
+            }else{
+                $order->update([
+                    'status'=>Order::REFUSED
+                ]);
+                return redirect()->route('callback.payment-fail');
+            }
+        }catch (\Exception $exception){
+            $order->update([
+                'status'=>Order::REFUSED
+            ]);
+            return redirect()->route('callback.payment-fail');
+        }
+    }
 }
