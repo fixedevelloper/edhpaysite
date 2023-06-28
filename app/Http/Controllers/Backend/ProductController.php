@@ -162,6 +162,12 @@ class ProductController extends Controller
     {
         $id = $request->get('item');
         $conge = Product::query()->find($id);
+        foreach ($conge->images as $image){
+            logger("-----------###");
+            $conge->images()->detach($image);
+            $image->delete();
+        }
+
         $conge->delete();
         return response()->json(['data' => $conge, 'status' => true]);
     }

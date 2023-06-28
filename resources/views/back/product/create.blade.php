@@ -92,14 +92,13 @@
                                         <div class="mb-3 col-md-6">
                                             <label for="name" class="form-label">Fichier</label>
                                             <input class="form-control"
-                                                   name="downloable_file" type="file" id="file" required=""
+                                                   name="downloable_file" type="file" id="file"
                                             >
                                         </div>
                                         <div class="mb-3 col-md-6">
                                             <label for="downloable_day" class="form-label">Jours d'expiration</label>
                                             <input class="form-control"
-                                                   name="downloable_day" type="number" id="downloable_day" min="0"
-                                            >
+                                                   name="downloable_day" type="number" id="downloable_day" min="0">
                                         </div>
                                     </div>
                                     <div class="row mt-3 d-grid text-center">
