@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Helpers\helpers;
 use App\Http\Controllers\Controller;
+use App\Http\Service\AdcryptoService;
 use App\Http\Service\CryptomusService;
 use App\Http\Service\EDHPayService;
 use App\Http\Service\FlutterwareService;
@@ -31,12 +32,13 @@ class FrontController extends Controller
     private $paypalService;
     private $edhpayService;
     private $cryptomusService;
+    private $advCryptoService;
 
     /**
      * FrontController constructor.
      * @param $logger
      */
-    public function __construct(CryptomusService $cryptomusService,EDHPayService $edhpayService,PaydunyaService $paydunyaService,FlutterwareService $flutterservice,
+    public function __construct(AdcryptoService $adcryptoService,CryptomusService $cryptomusService,EDHPayService $edhpayService,PaydunyaService $paydunyaService,FlutterwareService $flutterservice,
                                 LoggerInterface $logger,PaypalService $paypalService)
     {
         $this->logger = $logger;
@@ -45,6 +47,7 @@ class FrontController extends Controller
         $this->paypalService=$paypalService;
         $this->edhpayService=$edhpayService;
         $this->cryptomusService=$cryptomusService;
+        $this->advCryptoService=$adcryptoService;
     }
 
     public function home(Request $request)
@@ -329,8 +332,9 @@ class FrontController extends Controller
             'order_key'=>25147888]);*/
       //return  StripeService::payment_process_3d(['amount'=>2000]);
        // return $this->paypalService->payWithpaypal(['amount'=>2000,'name'=>"Rodrigue mbah"]);
-       $val=$this->edhpayService->connect();
-       logger($val['content']);
+      // $val=$this->edhpayService->connect();
+       //logger($val['content']);
+        $this->advCryptoService->getBalance();
     }
 
     public function redirectpayement(Request $request)
