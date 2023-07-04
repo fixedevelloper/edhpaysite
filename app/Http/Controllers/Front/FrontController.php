@@ -236,7 +236,7 @@ class FrontController extends Controller
               $response = $this->cinetPayService->sendPayment([
                     'transaction_id' => $orderkey,
                     "amount" => $total,
-                    'currency' => "XAF",
+                    'currency' => \session()->get('currency'),
                     'description' => "Paiement",
                     'customer_name' => $customer->name,
                     'customer_surname' => "",
