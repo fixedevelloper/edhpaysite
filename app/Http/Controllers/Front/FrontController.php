@@ -240,7 +240,7 @@ class FrontController extends Controller
                     'description' => "Paiement",
                     'customer_name' => $customer->name,
                     'customer_surname' => "",
-                    'customer_country' => "CG",
+                    'customer_country' => "CD",
                     'customer_phone_number' => $customer->phone,
                     'notify_url' => route('redirectpayement'),
                     'return_url' => route('redirectpayement')
