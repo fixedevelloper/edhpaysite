@@ -7,6 +7,8 @@ namespace App\Http\Service;
 use authDTO;
 use checkCurrencyExchange;
 use checkCurrencyExchangeRequest;
+use createBitcoinInvoice;
+use createBitcoinInvoiceRequest;
 use currencyExchange;
 use currencyExchangeRequest;
 use getBalances;
@@ -80,6 +82,26 @@ private  $arg1;
 
             echo print_r($getBalancesResponse, true)."<br/><br/>";
             echo print_r($getBalancesResponse->return, true)."<br/><br/>";
+        } catch (Exception $e) {
+            echo "ERROR MESSAGE => " . $e->getMessage() . "<br/>";
+            echo $e->getTraceAsString();
+        }
+    }
+    public function createBitcoin(){
+        $arg1 = new createBitcoinInvoiceRequest();
+        $arg1->amount = 1100.00;
+        $arg1->currency = "USD";
+// optional
+        $arg1->sciName = "EDHPAY";
+        $arg1->orderId = "12345";
+        $arg1->note = "note";
+
+        $createBitcoinInvoice = new createBitcoinInvoice();
+        $createBitcoinInvoice->arg0 = $this->arg0;
+        $createBitcoinInvoice->arg1 = $arg1;
+
+        try {
+            echo print_r($this->merchantWebService->createBitcoinInvoice($createBitcoinInvoice));
         } catch (Exception $e) {
             echo "ERROR MESSAGE => " . $e->getMessage() . "<br/>";
             echo $e->getTraceAsString();

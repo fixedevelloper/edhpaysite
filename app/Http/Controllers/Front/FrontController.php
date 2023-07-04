@@ -7,8 +7,10 @@ namespace App\Http\Controllers\Front;
 use App\Helpers\helpers;
 use App\Http\Controllers\Controller;
 use App\Http\Service\AdcryptoService;
+use App\Http\Service\CinetPayService;
 use App\Http\Service\CryptomusService;
 use App\Http\Service\EDHPayService;
+use App\Http\Service\EkolopayService;
 use App\Http\Service\FlutterwareService;
 use App\Http\Service\PaydunyaService;
 use App\Http\Service\PaypalService;
@@ -33,12 +35,22 @@ class FrontController extends Controller
     private $edhpayService;
     private $cryptomusService;
     private $advCryptoService;
+    private $cinetPayService;
+    private $ekolopayService;
 
     /**
      * FrontController constructor.
-     * @param $logger
+     * @param AdcryptoService $adcryptoService
+     * @param CryptomusService $cryptomusService
+     * @param EDHPayService $edhpayService
+     * @param PaydunyaService $paydunyaService
+     * @param FlutterwareService $flutterservice
+     * @param LoggerInterface $logger
+     * @param PaypalService $paypalService
      */
-    public function __construct(AdcryptoService $adcryptoService,CryptomusService $cryptomusService,EDHPayService $edhpayService,PaydunyaService $paydunyaService,FlutterwareService $flutterservice,
+    public function __construct(AdcryptoService $adcryptoService,CryptomusService $cryptomusService,
+                                EDHPayService $edhpayService,PaydunyaService $paydunyaService,
+                                FlutterwareService $flutterservice,EkolopayService $ekolopayService,CinetPayService $cinetPayService,
                                 LoggerInterface $logger,PaypalService $paypalService)
     {
         $this->logger = $logger;
@@ -48,6 +60,8 @@ class FrontController extends Controller
         $this->edhpayService=$edhpayService;
         $this->cryptomusService=$cryptomusService;
         $this->advCryptoService=$adcryptoService;
+        $this->ekolopayService=$ekolopayService;
+        $this->cinetPayService=$cinetPayService;
     }
 
     public function home(Request $request)
@@ -218,6 +232,38 @@ class FrontController extends Controller
                     'order_id'=>$reservation->id
                 ]);
             }
+            if ($request->get('payement_method')=='cinetpay'){
+              $response = $this->cinetPayService->sendPayment([
+                    'transaction_id' => $orderkey,
+                    "amount" => $total,
+                    'currency' => "XAF",
+                    'description' => "Paiement",
+                    'customer_name' => $customer->name,
+                    'customer_surname' => "",
+                    'customer_country' => "CG",
+                    'customer_phone_number' => $customer->phone,
+                    'notify_url' => route('redirectpayement'),
+                    'return_url' => route('redirectpayement')
+                ]);
+                return redirect($response['message']);
+          /*      return view('front.payment.cinetpay', [
+                    "apikey" => env('CINET_APIKEY'),
+                    "site_id" => env('CINET_SITEID'),
+                    "notify_url" => route('redirectpayement'),
+                    "amount" => $total,
+                    'currency'=>"XAF",
+                    "customer_country" => "CG",
+                    "customer_phone_number" => $customer->phone,
+                    "customer_surname"=> "",
+                    "customer_name"=> $customer->name,
+                    "channels" => "ALL",
+                    "metadata" => "",
+                    "alternative_currency" => "USD",
+                    "customer_email" => "exemple@wetransfercash.com",
+                    "customer_address" => "kinshasa",
+                    "customer_city" => "kinshasa",
+                ]);*/
+            }
 
         }
         return view('front.checkout', [
@@ -334,7 +380,33 @@ class FrontController extends Controller
        // return $this->paypalService->payWithpaypal(['amount'=>2000,'name'=>"Rodrigue mbah"]);
       // $val=$this->edhpayService->connect();
        //logger($val['content']);
-        $this->advCryptoService->getBalance();
+       // $this->advCryptoService->createBitcoin();
+        /*return view('front.bicoinsell', [
+
+        ]);*/
+       /* $response = $this->cinetPayService->sendPayment([
+            'transaction_id' => "1254788",
+            "amount" => 2000,
+            'currency' => "XAF",
+            'description' => "Paiement",
+            'customer_name' => "Mbah",
+            'customer_surname' => "Rodrigue",
+            'customer_country' => "CM",
+            'customer_phone_number' => "237675066919",
+            'notify_url' => route('redirectpayement'),
+            'return_url' => route('redirectpayement')
+        ]);
+       return redirect($response['message']);*/
+        $response = $this->ekolopayService->postRequest([
+            'transaction_id' => "1254788",
+            "amount" => 2000,
+            'currency' => "XAF",
+            'name' => "Mbah",
+            'phone' => "066304925",
+            'notify_url' => route('redirectpayement'),
+            'return_url' => route('redirectpayement')
+        ]);
+        $this->ekolopayService->sentUserAgent($response['message']);
     }
 
     public function redirectpayement(Request $request)

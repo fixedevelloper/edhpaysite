@@ -61,8 +61,8 @@
                         <form method="POST">
                             {{csrf_field()}}
                             <div class="form-check form-check-danger mb-2">
-                                <input class="form-check-input" name="payement_method" value="cryptomus" type="radio" id="customradio17" checked>
-                                <label class="form-check-label" for="customradio17"><img class="w-50" src="{{asset('multi/img/cryptomus.png')}}"></label>
+                                <input class="form-check-input" name="payement_method" value="cinetpay" type="radio" id="customradio17" checked>
+                                <label class="form-check-label" for="customradio17"><img class="w-50" src="https://cinetpay.com/assets/images/common/logo-cinetpay.webp"></label>
                             </div>
                             <div class="form-check form-check-danger mb-2">
                                 <input class="form-check-input" name="payement_method" value="fluterwave" type="radio" id="customradio17" checked>
