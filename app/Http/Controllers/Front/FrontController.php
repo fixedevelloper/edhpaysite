@@ -235,7 +235,7 @@ class FrontController extends Controller
             if ($request->get('payement_method')=='cinetpay'){
               $response = $this->cinetPayService->sendPayment([
                     'transaction_id' => $orderkey,
-                    "amount" =>round($total * helpers::setPrice(\session()->get('currency')),2),
+                    "amount" =>round($total * helpers::setPrice(\session()->get('currency'))),
                     'currency' => \session()->get('currency'),
                     'description' => "Paiement",
                     'customer_name' => $customer->name,
